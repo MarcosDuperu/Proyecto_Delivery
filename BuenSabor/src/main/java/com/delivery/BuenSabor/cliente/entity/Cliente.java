@@ -1,8 +1,13 @@
 package com.delivery.BuenSabor.cliente.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.delivery.BuenSabor.domicilio.entity.Domicilio;
 
 @Entity
 @Table(name = "cliente")
@@ -18,6 +23,10 @@ public class Cliente {
 	private Long telefono;
 	
 	private String email;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_domicilio")
+	private Domicilio domicilio;
 
 	public Long getId() {
 		return id;
@@ -57,6 +66,15 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	
+	public Domicilio getDomicilio() {
+		return domicilio;
+	}
+
+	public void setDomicilio(Domicilio domicilio) {
+		this.domicilio = domicilio;
 	}
 
 	@Override
