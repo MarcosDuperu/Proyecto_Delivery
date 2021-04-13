@@ -1,4 +1,4 @@
-package com.delivery.BuenSabor.controller;
+package com.delivery.BuenSabor.cliente.controller;
 
 import java.util.Optional;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.BuenSabor.entity.Cliente;
-import com.delivery.BuenSabor.service.ClienteServiceImpl;
+import com.delivery.BuenSabor.cliente.entity.Cliente;
+import com.delivery.BuenSabor.cliente.service.ClienteServiceImpl;
 
 @RestController
 @RequestMapping(path = "/api/v1/cliente")

@@ -1,4 +1,4 @@
-package com.delivery.BuenSabor.entity;
+package com.delivery.BuenSabor.cliente.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,8 +1,8 @@
-package com.delivery.BuenSabor.service;
+package com.delivery.BuenSabor.cliente.service;
 
 import java.util.Optional;
 
-import com.delivery.BuenSabor.entity.Cliente;
+import com.delivery.BuenSabor.cliente.entity.Cliente;
 
 public interface ClienteService {
 

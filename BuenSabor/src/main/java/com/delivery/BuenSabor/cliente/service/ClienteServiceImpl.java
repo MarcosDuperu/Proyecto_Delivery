@@ -1,12 +1,12 @@
-package com.delivery.BuenSabor.service;
+package com.delivery.BuenSabor.cliente.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.delivery.BuenSabor.entity.Cliente;
-import com.delivery.BuenSabor.repository.ClienteRepository;
+import com.delivery.BuenSabor.cliente.entity.Cliente;
+import com.delivery.BuenSabor.cliente.repository.ClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
