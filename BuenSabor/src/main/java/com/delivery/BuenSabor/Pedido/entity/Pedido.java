@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.delivery.BuenSabor.DetallePedido.entity.DetallePedido;
 import com.delivery.BuenSabor.Factura.entity.Factura;
 
 @Entity
@@ -31,12 +32,13 @@ public class Pedido {
 	@Column(name = "fecha")
 	private Date fecha;
 
-	// @OneToMany(cascade = CascadeType.ALL)
-	// @JoinColumn(name = "fk_detallePedido")
-	// private DetallePedido detallePedido[];
-	// FALTANTE FALTA GET AND SETER
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_detallePedido")
+	private DetallePedido detallePedido[];
+
 	
-	
+
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_factura")
 	private Factura factura;
@@ -102,19 +104,31 @@ public class Pedido {
 		this.factura = factura;
 	}
 	
+	public DetallePedido[] getDetallePedido() {
+		return detallePedido;
+	}
+
+	public void setDetallePedido(DetallePedido[] detallePedido) {
+		this.detallePedido = detallePedido;
+	}
 	
-	/*	@Override
-	private boolean equals(Object obj) {
-		if (this == obj) {
-			return false;
-			
+	@Override
+	public boolean equals(Object obj) {
+		if(this==obj) {
+			return true;
 		}
-		Pedido p = (Pedido) obj;
-		return this.id != null && this.id.equals(p.getId());
-	}*/
+		if(!(obj instanceof Pedido)) {
+			return false;
+		}
+		Pedido P = (Pedido) obj;
+		return this.id !=null && this.id.equals(P.getId());
+	}
 	
-	
-	
-	
+	@Override
+	public String toString() {
+		String obj="ID:"+this.id+"/ Estado:"+ this.estado + "/ Hora Estimada:" + this.horaEstimadaFin + "/ Tipo de Envio:" + this.tipoEnvio +
+				"/ Total:" + this.total + "/ Fecha:" + this.fecha;
+		return obj;
+	}
 
 }
