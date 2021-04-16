@@ -20,18 +20,25 @@ public class Factura {
 
 	@Id
 	private long id;
+	
 	@Column(name = "numero")
 	private int numero;
-	@Column(name = "montoDescuento")
+	
+	@Column(name = "monto_descuento")
 	private double montoDescuento;
-	@Column(name = "formaPago")
+	
+	@Column(name = "forma_pago")
 	private String formaPago;
-	@Column(name = "numeroTarjeta")
+	
+	@Column(name = "numero_tarjeta")
 	private String numTarjeta;
-	@Column(name = "totalCosto")
+	
+	@Column(name = "total_venta")
 	private double totalVenta;
-	@Column(name = "totalCosto")
+	
+	@Column(name = "total_costo")
 	private double totalCosto;
+	
 	@Column(name = "fecha")
 	private Date fecha;
 

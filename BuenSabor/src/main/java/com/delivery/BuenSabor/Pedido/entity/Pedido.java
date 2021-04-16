@@ -5,30 +5,38 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.Factura.entity.Factura;
+import com.delivery.BuenSabor.cliente.entity.Cliente;
+import com.delivery.BuenSabor.domicilio.entity.Domicilio;
 
 @Entity
 @Table(name = "pedido")
 public class Pedido {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "estado")
+	
 	private int estado;
-	@Column(name = "horasEstimadasFin")
+	
+	@Column(name = "horas_estimadas_fin")
 	private Date horaEstimadaFin; // dataTime
-	@Column(name = "tipoEnvio")
+	
+	@Column(name = "tipo_envio")
 	private int tipoEnvio;
-	@Column(name = "total")
+	
 	private double total;
-	@Column(name = "fecha")
+	
 	private Date fecha;
 
 	// @OneToMany(cascade = CascadeType.ALL)
@@ -40,6 +48,14 @@ public class Pedido {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_factura")
 	private Factura factura;
+	
+	@ManyToOne
+	@JoinColumn( name = "fk_cliente")
+	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn( name = "fk_domicilio")
+	private Domicilio domicilio;
 	
 	@PrePersist
 	public void prePersist() {
@@ -100,6 +116,22 @@ public class Pedido {
 
 	public void setFactura(Factura factura) {
 		this.factura = factura;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Domicilio getDomicilio() {
+		return domicilio;
+	}
+
+	public void setDomicilio(Domicilio domicilio) {
+		this.domicilio = domicilio;
 	}
 	
 	
