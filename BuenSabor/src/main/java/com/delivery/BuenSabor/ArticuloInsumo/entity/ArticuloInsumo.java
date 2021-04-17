@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.delivery.BuenSabor.RubroArticulo.entity.RubroArticulo;
 
 @Entity
 @Table(name = "articulo_insumo")
@@ -34,6 +38,10 @@ public class ArticuloInsumo {
 	
 	@Column(name = "es_insumo")
 	private boolean esInsumo;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "fk_rubro_articulo")
+	private RubroArticulo rubroArticulo;
 
 	public Long getId() {
 		return id;
@@ -97,6 +105,14 @@ public class ArticuloInsumo {
 
 	public void setEsInsumo(boolean esInsumo) {
 		this.esInsumo = esInsumo;
+	}
+
+	public RubroArticulo getRubroArticulo() {
+		return rubroArticulo;
+	}
+
+	public void setRubroArticulo(RubroArticulo rubroArticulo) {
+		this.rubroArticulo = rubroArticulo;
 	}
 
 	@Override

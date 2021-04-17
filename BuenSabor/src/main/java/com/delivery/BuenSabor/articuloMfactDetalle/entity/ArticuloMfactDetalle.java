@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
 
 @Entity
 @Table(name = "articulo_mfact_detalle")
@@ -19,6 +23,10 @@ public class ArticuloMfactDetalle {
 	
 	@Column(name = "unidad_medida")
 	private String unidadMedida;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "fk_articulo_insumo")
+	private ArticuloInsumo articuloInsumo;
 
 	public Long getId() {
 		return id;
@@ -42,6 +50,14 @@ public class ArticuloMfactDetalle {
 
 	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
+	}
+
+	public ArticuloInsumo getArticuloInsumo() {
+		return articuloInsumo;
+	}
+
+	public void setArticuloInsumo(ArticuloInsumo articuloInsumo) {
+		this.articuloInsumo = articuloInsumo;
 	}
 
 	@Override
