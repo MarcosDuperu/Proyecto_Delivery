@@ -43,14 +43,21 @@ public class Usuario {
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if(this==obj) {
+			return true;
+		}
+		if(!(obj instanceof Usuario)) {
+			return false;
+		}
+		Usuario u = (Usuario) obj;
+		return this.usuario !=null && this.usuario.equals(u.getUsuario());
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		String obj = "Usuario: "+this.usuario + "/ clave: " + this.clave +
+				"/ clave: " + this.clave;
+		return obj;
 	}
 	
 	

@@ -1,6 +1,7 @@
-package com.delivery.BuenSabor.cliente.controller;
+package com.delivery.BuenSabor.MercadoPagoDatos.controller;
 
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,38 +14,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.BuenSabor.cliente.entity.Cliente;
-import com.delivery.BuenSabor.cliente.service.ClienteServiceImpl;
+import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
+import com.delivery.BuenSabor.MercadoPagoDatos.service.MercadoPagoDatosImpl;
 
 @RestController
-@RequestMapping(path = "/api/v1/cliente")
-public class Clientecontroller {
+@RequestMapping(path = "/api/v1/mpago")
+public class MercadoPagoDatosController {
 
 	@Autowired
-	protected ClienteServiceImpl service;
+	protected MercadoPagoDatosImpl service;
 	
 	@GetMapping("/all")
-	public ResponseEntity<?> allCliente(){
+	public ResponseEntity<?> allMpagoDatos(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
-		Optional<Cliente> o = service.findById(id);
-		if(!o.isPresent()) {
+		Optional<MercadoPagoDatos> f = service.findById(id);
+		if(f.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(o.get());
+		return ResponseEntity.ok(f.get());
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Cliente cliente) {
-		Cliente clienteDb = service.save(cliente);
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteDb);
+	public ResponseEntity<?> guardar(@RequestBody MercadoPagoDatos mPagoD) {
+		MercadoPagoDatos mPD = service.save(mPagoD);
+		return ResponseEntity.status(HttpStatus.CREATED).body(mPD);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
+	public ResponseEntity<?> eliminarMpagoD(@PathVariable Long id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}

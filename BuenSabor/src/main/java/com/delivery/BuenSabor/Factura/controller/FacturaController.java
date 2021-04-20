@@ -32,7 +32,7 @@ public class FacturaController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
 		Optional<Factura> f = service.findById(id);
-		if(f.isPresent()) {
+		if(!f.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(f.get());

@@ -1,4 +1,4 @@
-package com.delivery.BuenSabor.cliente.controller;
+package com.delivery.BuenSabor.ArticuloInsumo.controller;
 
 import java.util.Optional;
 
@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.BuenSabor.cliente.entity.Cliente;
-import com.delivery.BuenSabor.cliente.service.ClienteServiceImpl;
+import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
+import com.delivery.BuenSabor.ArticuloInsumo.service.ArticuloInsumoServiceImpl;
 
 @RestController
-@RequestMapping(path = "/api/v1/cliente")
-public class Clientecontroller {
+@RequestMapping(path ="/api/v1/articuloinsumo")
+public class ArticuloInsumoController {
 
 	@Autowired
-	protected ClienteServiceImpl service;
+	protected ArticuloInsumoServiceImpl service;
 	
 	@GetMapping("/all")
-	public ResponseEntity<?> allCliente(){
-		return ResponseEntity.ok().body(service.findAll());
+	public ResponseEntity<?> AllInsumo() {
+		return ResponseEntity.ok().body(service.finAll());
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> byId(@PathVariable Long id){
-		Optional<Cliente> o = service.findById(id);
+	@GetMapping("{id}")
+	public ResponseEntity<?> byId(@PathVariable Long id) {
+		Optional<ArticuloInsumo> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -38,9 +38,9 @@ public class Clientecontroller {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Cliente cliente) {
-		Cliente clienteDb = service.save(cliente);
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteDb);
+	public ResponseEntity<?> guardar(@RequestBody ArticuloInsumo articuloInsumo) {
+		ArticuloInsumo articuloDb = service.save(articuloInsumo);
+		return ResponseEntity.status(HttpStatus.CREATED).body(articuloDb);
 	}
 	
 	@DeleteMapping("/{id}")

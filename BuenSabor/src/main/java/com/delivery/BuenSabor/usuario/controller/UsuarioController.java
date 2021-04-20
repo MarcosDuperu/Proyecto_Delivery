@@ -1,4 +1,4 @@
-package com.delivery.BuenSabor.cliente.controller;
+package com.delivery.BuenSabor.usuario.controller;
 
 import java.util.Optional;
 
@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.BuenSabor.cliente.entity.Cliente;
-import com.delivery.BuenSabor.cliente.service.ClienteServiceImpl;
+import com.delivery.BuenSabor.usuario.entity.Usuario;
+import com.delivery.BuenSabor.usuario.service.UsuarioServiceImpl;
 
 @RestController
-@RequestMapping(path = "/api/v1/cliente")
-public class Clientecontroller {
+@RequestMapping(path = "/api/v1/usuario")
+public class UsuarioController {
 
 	@Autowired
-	protected ClienteServiceImpl service;
+	protected UsuarioServiceImpl service;
 	
 	@GetMapping("/all")
-	public ResponseEntity<?> allCliente(){
+	public ResponseEntity<?> allUser() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> byId(@PathVariable Long id){
-		Optional<Cliente> o = service.findById(id);
+	@GetMapping("/{usuario}")
+	public ResponseEntity<?> byUsuario(@PathVariable String usuario) {
+		Optional<Usuario> o = service.findByUsuario(usuario);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -38,14 +38,14 @@ public class Clientecontroller {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Cliente cliente) {
-		Cliente clienteDb = service.save(cliente);
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteDb);
+	public ResponseEntity<?> guardar(@RequestBody Usuario usuario) {
+		Usuario usuarioDb = service.save(usuario);
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDb);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
-		service.deleteById(id);
+	@DeleteMapping("/{usuario}")
+	public ResponseEntity<?> eliminarUsuario(@PathVariable String usuario){
+		service.deleteByIdUsuario(usuario);
 		return ResponseEntity.noContent().build();
 	}
 }
