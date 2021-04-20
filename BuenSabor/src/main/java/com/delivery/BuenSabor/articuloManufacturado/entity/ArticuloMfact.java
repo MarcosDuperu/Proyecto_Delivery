@@ -1,13 +1,19 @@
 package com.delivery.BuenSabor.articuloManufacturado.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.delivery.BuenSabor.articuloMfactDetalle.entity.ArticuloMfactDetalle;
 import com.delivery.BuenSabor.rubroGeneral.entity.RubroGeneral;
 
 @Entity
@@ -30,6 +36,9 @@ public class ArticuloMfact {
 	
 	@Transient
 	private RubroGeneral rubroGeneral;
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ArticuloMfactDetalle> articuloMfactDetalle = new ArrayList<ArticuloMfactDetalle>();
 
 	public Long getId() {
 		return id;
@@ -77,6 +86,14 @@ public class ArticuloMfact {
 
 	public void setRubroGeneral(RubroGeneral rubroGeneral) {
 		this.rubroGeneral = rubroGeneral;
+	}
+
+	public List<ArticuloMfactDetalle> getArticuloMfactDetalle() {
+		return articuloMfactDetalle;
+	}
+
+	public void setArticuloMfactDetalle(List<ArticuloMfactDetalle> articuloMfactDetalle) {
+		this.articuloMfactDetalle = articuloMfactDetalle;
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class PedidoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
 		Optional<Pedido> p = service.findById(id);
-		if(p.isPresent()) {
+		if(!p.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(p.get());

@@ -31,7 +31,7 @@ public class DomicilioController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id) {
 		Optional<Domicilio> o = service.findById(id);
-		if(o.isPresent()) {
+		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(o.get());

@@ -31,7 +31,7 @@ public class UsuarioController {
 	@GetMapping("/{usuario}")
 	public ResponseEntity<?> byUsuario(@PathVariable String usuario) {
 		Optional<Usuario> o = service.findByUsuario(usuario);
-		if( o.isPresent()) {
+		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(o.get());

@@ -28,10 +28,10 @@ public class articuloMfactController {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@GetMapping("/{id")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
 		Optional<ArticuloMfact> o = service.findById(id);
-		if(o.isPresent()) {
+		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(o.get());
