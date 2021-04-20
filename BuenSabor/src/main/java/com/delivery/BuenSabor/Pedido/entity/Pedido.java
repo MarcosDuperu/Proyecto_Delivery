@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.delivery.BuenSabor.DetallePedido.entity.DetallePedido;
 import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.cliente.entity.Cliente;
 import com.delivery.BuenSabor.domicilio.entity.Domicilio;
@@ -39,9 +40,9 @@ public class Pedido {
 	
 	private Date fecha;
 
-	// @OneToMany(cascade = CascadeType.ALL)
-	// @JoinColumn(name = "fk_detallePedido")
-	// private DetallePedido detallePedido[];
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_detallePedido")
+	 private DetallePedido detallePedido[];
 	// FALTANTE FALTA GET AND SETER
 	
 	
