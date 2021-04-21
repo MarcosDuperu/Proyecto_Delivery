@@ -37,6 +37,18 @@ public class UsuarioController {
 		return ResponseEntity.ok(o.get());
 	}
 	
+	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable String user){
+		Optional<Usuario> o = service.findByUsuario(user);
+		if(!o.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		Usuario usuarioDb = o.get();
+		usuarioDb.setClave(usuario.getClave());
+		usuarioDb.setCliente(usuario.getCliente());
+		usuarioDb.setRol(usuario.getRol());
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuarioDb));
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody Usuario usuario) {
 		Usuario usuarioDb = service.save(usuario);

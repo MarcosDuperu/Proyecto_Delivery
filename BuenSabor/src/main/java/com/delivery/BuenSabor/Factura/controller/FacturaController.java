@@ -29,9 +29,9 @@ public class FacturaController {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> byId(@PathVariable Long id){
-		Optional<Factura> f = service.findById(id);
+	@GetMapping("/{numero}")
+	public ResponseEntity<?> byId(@PathVariable Integer numero){
+		Optional<Factura> f = service.findByNumero(numero);
 		if(!f.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -44,9 +44,9 @@ public class FacturaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(facturaeDb);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> eliminarUna(@PathVariable Long id) {
-		service.deleteById(id);
+	@DeleteMapping("/{numero}")
+	public ResponseEntity<?> eliminarUna(@PathVariable Integer numero) {
+		service.deleteByNumero(numero);
 		return ResponseEntity.noContent().build();
 	}
 }

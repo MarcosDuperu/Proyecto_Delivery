@@ -1,13 +1,15 @@
 package com.delivery.BuenSabor.Factura.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -21,10 +23,8 @@ import com.delivery.BuenSabor.Pedido.entity.Pedido;
 public class Factura {
 
 	@Id
-	private long id;
-	
-	@Column(name = "numero")
-	private int numero;
+	@Column(name = "numero", unique = true)
+	private Integer numero;
 	
 	@Column(name = "monto_descuento")
 	private double montoDescuento;
@@ -41,20 +41,24 @@ public class Factura {
 	@Column(name = "total_costo")
 	private double totalCosto;
 	
-	@Column(name = "fecha")
 	private Date fecha;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_detalleFactura")
-	private DetalleFactura detallesFacturas[];
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(
+			name = "factura_detalle",
+			joinColumns = @JoinColumn(name = "factura_id"),
+			inverseJoinColumns = @JoinColumn(name = "detalle_factura")
+			)
+	private List<DetalleFactura> detallesFacturas;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_pedido")
 	private Pedido pedido;
 
-	// FALTANTES PREGUNTAR CUANDO ERA CON TRIANGULO LLENO
-	// CREAR GET Y SET DE LO Q ESTA COMENADO ARRIBA FALTAN ESAS CLASES
-
+	public Factura() {
+		this.detallesFacturas = new ArrayList<DetalleFactura>();
+	}
+	
 	@PrePersist
 	public void prePersist() {
 		this.fecha = new Date();
@@ -68,19 +72,11 @@ public class Factura {
 		this.fecha = fecha;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public int getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 
@@ -132,12 +128,40 @@ public class Factura {
 		this.pedido = pedido;
 	}
 
-	/*
-	 * @Override private boolean equals(Object obj) { if (this == obj) { return
-	 * false;
-	 * 
-	 * } Factura f = (Factura) obj; return this.id != null &&
-	 * this.id.equals(f.getId()); }
-	 */
+	public List<DetalleFactura> getDetallesFacturas() {
+		return detallesFacturas;
+	}
+
+	public void setDetallesFacturas(List<DetalleFactura> detallesFacturas) {
+		this.detallesFacturas = detallesFacturas;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;	
+		}
+		if(!(obj instanceof Factura)) {
+			return false;
+		}
+		Factura f = (Factura) obj;
+		return this.numero != null && this.numero.equals(f.getNumero());
+	}
+
+	@Override
+	public String toString() {
+		String obj = "Numero: " + this.numero
+				+ "/ Fecha: " + this.fecha.toString()
+				+ "/ Descuento: " + this.montoDescuento
+				+ "/ FormaPago: " + this.formaPago
+				+ "/ NroTarjeta: " + this.numTarjeta
+				+ "/ TotalVenta: " + this.totalVenta
+				+ "/ totalCosto: " + this.totalCosto
+				+ "/ Pedido: " + this.pedido.getId();
+		for (DetalleFactura detalleFactura : detallesFacturas) {
+			obj = obj + detalleFactura.getId();
+		}
+		return obj;
+	}
 
 }

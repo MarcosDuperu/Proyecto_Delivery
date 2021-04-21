@@ -1,9 +1,14 @@
 package com.delivery.BuenSabor.usuario.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.delivery.BuenSabor.cliente.entity.Cliente;
 
 @Entity
 @Table(name = "usuario")
@@ -16,6 +21,10 @@ public class Usuario {
 	private String clave;
 	
 	private String rol;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_cliente")
+	private Cliente cliente;
 
 	public String getUsuario() {
 		return usuario;
@@ -39,6 +48,14 @@ public class Usuario {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override

@@ -8,9 +8,9 @@ public interface FacturaService {
 
 	public Iterable<Factura> findAll();
 
-	public Optional<Factura> findById(Long id);
+	public Optional<Factura> findByNumero(Integer numero);
 
 	public Factura save(Factura factura);
 
-	public void deleteById(Long id);
+	public void deleteByNumero(Integer numero);
 }
