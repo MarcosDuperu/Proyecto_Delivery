@@ -114,7 +114,7 @@ public class ArticuloInsumo {
 		this.unidadMedida = unidadMedida;
 	}
 
-	public boolean isEsInsumo() {
+	public boolean getEsInsumo() {
 		return esInsumo;
 	}
 

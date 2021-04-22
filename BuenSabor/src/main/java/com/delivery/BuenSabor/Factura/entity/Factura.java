@@ -43,12 +43,8 @@ public class Factura {
 	
 	private Date fecha;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(
-			name = "factura_detalle",
-			joinColumns = @JoinColumn(name = "factura_id"),
-			inverseJoinColumns = @JoinColumn(name = "detalle_factura")
-			)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_detalles_factura")
 	private List<DetalleFactura> detallesFacturas;
 
 	@OneToOne(cascade = CascadeType.ALL)

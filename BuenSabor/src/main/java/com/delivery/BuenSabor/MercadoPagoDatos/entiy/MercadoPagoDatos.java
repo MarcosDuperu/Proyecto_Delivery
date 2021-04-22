@@ -3,6 +3,7 @@ package com.delivery.BuenSabor.MercadoPagoDatos.entiy;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,26 +20,31 @@ public class MercadoPagoDatos {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long identificadorPago;
+	@Column(name = "id_pago")
+	private Long idPago;
 
+	@Column(name = "fecha_creacion")
 	private Date fechaCreacion;
 
+	@Column(name = "fecha_aprobacion")
 	private Date fechaAprobacion;
 
-	private String fromaPago;
+	@Column(name = "forma_pago")
+	private String formaPago;
 
+	@Column(name = "metodo_pago")
 	private String metodoPago;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_domicilio")
 	private Pedido pedido;
 
-	public Long getIdentificadorPago() {
-		return identificadorPago;
+	public Long getIdPago() {
+		return idPago;
 	}
 
-	public void setIdentificadorPago(Long identificadorPago) {
-		this.identificadorPago = identificadorPago;
+	public void setIdPago(Long idPago) {
+		this.idPago = idPago;
 	}
 
 	public Date getFechaCreacion() {
@@ -57,12 +63,12 @@ public class MercadoPagoDatos {
 		this.fechaAprobacion = fechaAprobacion;
 	}
 
-	public String getFromaPago() {
-		return fromaPago;
+	public String getFormaPago() {
+		return formaPago;
 	}
 
-	public void setFromaPago(String fromaPago) {
-		this.fromaPago = fromaPago;
+	public void setFormaPago(String formaPago) {
+		this.formaPago = formaPago;
 	}
 
 	public String getMetodoPago() {
@@ -90,13 +96,13 @@ public class MercadoPagoDatos {
 			return false;
 		}
 		MercadoPagoDatos c = (MercadoPagoDatos) obj;
-		return this.identificadorPago != null && this.identificadorPago.equals(c.getIdentificadorPago());
+		return this.idPago != null && this.idPago.equals(c.getIdPago());
 	}
 
 	@Override
 	public String toString() {
-		String obj = "ID-Pago:" + this.identificadorPago + "/ Fech-Creacion:" + this.fechaCreacion
-				+ "/ Fecha Aprobacion:" + this.fechaAprobacion + "/ Forma pago:" + this.fromaPago + "/ Metodo Pago:"
+		String obj = "ID-Pago:" + this.idPago + "/ Fech-Creacion:" + this.fechaCreacion
+				+ "/ Fecha Aprobacion:" + this.fechaAprobacion + "/ Forma pago:" + this.formaPago + "/ Metodo Pago:"
 				+ this.metodoPago;
 		return obj;
 	}

@@ -1,6 +1,8 @@
 package com.delivery.BuenSabor.DetalleFactura.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,9 +25,9 @@ public class DetalleFactura {
 	
 	private double subtotal;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	/*@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_factura")
-	private Factura factura;
+	private Factura factura;*/
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_articulo_mfact")
@@ -59,13 +61,13 @@ public class DetalleFactura {
 		this.subtotal = subtotal;
 	}
 
-	public Factura getFactura() {
+	/*public Factura getFactura() {
 		return factura;
 	}
 
 	public void setFactura(Factura factura) {
 		this.factura = factura;
-	}
+	}*/
 	
 	public ArticuloMfact getArticuloMfact() {
 		return articuloMfact;

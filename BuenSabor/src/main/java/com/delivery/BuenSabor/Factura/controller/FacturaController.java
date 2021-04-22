@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +37,24 @@ public class FacturaController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(f.get());
+	}
+	
+	@PutMapping("/{numero}")
+	public ResponseEntity<?> update(@RequestBody Factura factura, @PathVariable Integer numero) {
+		Optional<Factura> o = service.findByNumero(numero);
+		if(!o.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		Factura facturaDb = o.get();
+		facturaDb.setDetallesFacturas(factura.getDetallesFacturas());
+		facturaDb.setFecha(factura.getFecha());
+		facturaDb.setFormaPago(factura.getFormaPago());
+		facturaDb.setMontoDescuento(factura.getMontoDescuento());
+		facturaDb.setNumTarjeta(factura.getNumTarjeta());
+		facturaDb.setPedido(factura.getPedido());
+		facturaDb.setTotalCosto(factura.getTotalCosto());
+		facturaDb.setTotalVenta(factura.getTotalVenta());
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(facturaDb));
 	}
 	
 	@PostMapping
