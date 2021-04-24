@@ -1,15 +1,12 @@
 package com.delivery.BuenSabor.DetalleFactura.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
-import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
 
 import javax.persistence.CascadeType;

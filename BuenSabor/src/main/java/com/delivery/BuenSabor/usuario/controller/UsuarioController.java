@@ -2,6 +2,7 @@ package com.delivery.BuenSabor.usuario.controller;
 
 import java.util.Optional;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class UsuarioController {
 			return ResponseEntity.notFound().build();
 		}
 		Usuario usuarioDb = o.get();
-		usuarioDb.setClave(usuario.getClave());
+		usuarioDb.setClave(DigestUtils.md5Hex(usuario.getClave()));
 		usuarioDb.setCliente(usuario.getCliente());
 		usuarioDb.setRol(usuario.getRol());
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuarioDb));
@@ -52,6 +53,8 @@ public class UsuarioController {
 	
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody Usuario usuario) {
+		String clave = DigestUtils.md5Hex(usuario.getClave());
+		usuario.setClave(clave);
 		Usuario usuarioDb = service.save(usuario);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDb);
 	}
