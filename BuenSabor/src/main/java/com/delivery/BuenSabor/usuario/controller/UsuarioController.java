@@ -1,67 +1,89 @@
 package com.delivery.BuenSabor.usuario.controller;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.codec.digest.DigestUtils;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delivery.BuenSabor.security.dto.JwtDto;
+import com.delivery.BuenSabor.security.dto.LoginUsuario;
+import com.delivery.BuenSabor.security.dto.NuevoUsuario;
+import com.delivery.BuenSabor.security.enums.RolNombre;
+import com.delivery.BuenSabor.security.jwt.JwtProvider;
+import com.delivery.BuenSabor.usuario.entity.Rol;
 import com.delivery.BuenSabor.usuario.entity.Usuario;
+import com.delivery.BuenSabor.usuario.service.RolServiceImpl;
 import com.delivery.BuenSabor.usuario.service.UsuarioServiceImpl;
 
 @RestController
-@RequestMapping(path = "/api/v1/usuario")
+@RequestMapping(path = "/api/v1/usuario/auth")
+@CrossOrigin
 public class UsuarioController {
 
 	@Autowired
-	protected UsuarioServiceImpl service;
+	PasswordEncoder passwordEncoder;
 	
-	@GetMapping("/all")
-	public ResponseEntity<?> allUser() {
-		return ResponseEntity.ok().body(service.findAll());
+	@Autowired
+	AuthenticationManager authenticationManager;
+	
+	@Autowired
+	UsuarioServiceImpl usuarioService;
+	
+	@Autowired
+	RolServiceImpl rolservice;
+	
+	@Autowired
+	JwtProvider jwtProvider;
+	
+	@PostMapping("/crear")
+	public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
+		if(bindingResult.hasErrors())
+			return ResponseEntity.badRequest().build();
+		if(usuarioService.existsByUsuario(nuevoUsuario.getUsuario()))
+			return ResponseEntity.badRequest().build();
+		Usuario usuario = new Usuario();
+		usuario.setUsuario(nuevoUsuario.getUsuario());
+		usuario.setClave(passwordEncoder.encode(nuevoUsuario.getPassword()));
+		usuario.setCliente(nuevoUsuario.getCliente());
+		Set<Rol> roles = new HashSet<>();
+		if(nuevoUsuario.getRoles().contains("cliente"))
+			roles.add(rolservice.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
+		if(nuevoUsuario.getRoles().contains("jefe"))
+			roles.add(rolservice.getByRolNombre(RolNombre.ROLE_ADMINISTRADOR).get());
+		if(nuevoUsuario.getRoles().contains("cajero"))
+			roles.add(rolservice.getByRolNombre(RolNombre.ROLE_CAJERO).get());
+		if(nuevoUsuario.getRoles().contains("cocinero"))
+			roles.add(rolservice.getByRolNombre(RolNombre.ROLE_COCINERO).get());
+		usuario.setRoles(roles);
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
 	}
 	
-	@GetMapping("/{usuario}")
-	public ResponseEntity<?> byUsuario(@PathVariable String usuario) {
-		Optional<Usuario> o = service.findByUsuario(usuario);
-		if(!o.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(o.get());
-	}
-	@PutMapping("/{user}")
-	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable String user){
-		Optional<Usuario> o = service.findByUsuario(user);
-		if(!o.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		Usuario usuarioDb = o.get();
-		usuarioDb.setClave(DigestUtils.md5Hex(usuario.getClave()));
-		usuarioDb.setCliente(usuario.getCliente());
-		usuarioDb.setRol(usuario.getRol());
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuarioDb));
-	}
-	
-	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Usuario usuario) {
-		String clave = DigestUtils.md5Hex(usuario.getClave());
-		usuario.setClave(clave);
-		Usuario usuarioDb = service.save(usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDb);
-	}
-	
-	@DeleteMapping("/{usuario}")
-	public ResponseEntity<?> eliminarUsuario(@PathVariable String usuario){
-		service.deleteByIdUsuario(usuario);
-		return ResponseEntity.noContent().build();
+	@PostMapping("/login")
+	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
+		if(bindingResult.hasErrors())
+			return ResponseEntity.badRequest().build();
+		Authentication authentication = 
+				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getUsuario(), loginUsuario.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtProvider.generateToken(authentication);
+		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+		return new ResponseEntity<JwtDto>(jwtDto, HttpStatus.OK);
 	}
 }
