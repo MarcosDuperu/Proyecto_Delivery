@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class ArticuloInsumoController {
 		return ResponseEntity.ok(o.get());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody ArticuloInsumo articuloInsumo, @PathVariable Long id){
 		Optional<ArticuloInsumo> o = service.findById(id);
@@ -57,12 +59,14 @@ public class ArticuloInsumoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(articuloDb));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody ArticuloInsumo articuloInsumo) {
 		ArticuloInsumo articuloDb = service.save(articuloInsumo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(articuloDb);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);
