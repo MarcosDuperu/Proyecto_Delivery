@@ -1,21 +1,43 @@
 package com.delivery.BuenSabor.usuario.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.delivery.BuenSabor.cliente.entity.Cliente;
 
 @Entity
 @Table(name = "usuario")
 public class Usuario {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@Column(name = "usuario", unique = true)
 	private String usuario;
 	
 	private String clave;
 	
-	private String rol;
+	@ManyToMany
+	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
+	inverseJoinColumns = @JoinColumn(name = "rol_id"))
+	private Set<Rol> roles = new HashSet<>();
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_cliente")
+	private Cliente cliente;
 
 	public String getUsuario() {
 		return usuario;
@@ -33,12 +55,36 @@ public class Usuario {
 		this.clave = clave;
 	}
 
-	public String getRol() {
-		return rol;
+	public Long getId() {
+		return id;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	public boolean login(Usuario user) {
+		if(this.usuario.equals(user.getUsuario())) {
+			if(this.clave.equals(user.getClave()))
+				return true;
+		}
+		return false;
 	}
 
 	@Override

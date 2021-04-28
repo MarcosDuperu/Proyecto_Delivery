@@ -8,7 +8,7 @@ public interface MercadoPagoDatosService {
 
 	public Iterable<MercadoPagoDatos> findAll();
 
-	public Optional<MercadoPagoDatos> findById(Long id);
+	public Optional<MercadoPagoDatos> findById(Long idPago);
 
 	public MercadoPagoDatos save(MercadoPagoDatos mPagoD);
 

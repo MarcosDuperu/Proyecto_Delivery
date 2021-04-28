@@ -38,7 +38,11 @@ public class ArticuloMfact {
 	private RubroGeneral rubroGeneral;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ArticuloMfactDetalle> articuloMfactDetalle = new ArrayList<ArticuloMfactDetalle>();
+	private List<ArticuloMfactDetalle> articulosMfactDetalle;
+	
+	public ArticuloMfact() {
+		this.articulosMfactDetalle = new ArrayList<ArticuloMfactDetalle>();
+	}
 
 	public Long getId() {
 		return id;
@@ -88,12 +92,12 @@ public class ArticuloMfact {
 		this.rubroGeneral = rubroGeneral;
 	}
 
-	public List<ArticuloMfactDetalle> getArticuloMfactDetalle() {
-		return articuloMfactDetalle;
+	public List<ArticuloMfactDetalle> getArticulosMfactDetalle() {
+		return articulosMfactDetalle;
 	}
 
-	public void setArticuloMfactDetalle(List<ArticuloMfactDetalle> articuloMfactDetalle) {
-		this.articuloMfactDetalle = articuloMfactDetalle;
+	public void setArticuloMfactDetalle(List<ArticuloMfactDetalle> articulosMfactDetalle) {
+		this.articulosMfactDetalle = articulosMfactDetalle;
 	}
 
 	@Override
@@ -113,6 +117,9 @@ public class ArticuloMfact {
 		String obj = "Id: " + this.id + "/ TiempEstimado: " + this.tiempoEstimadoCoccion +
 				"/ Denominacion: " + this.denominacion + "/ PrecioVenta: " + this.precioVenta +
 				"/ Imagen: " + this.imagen;
+		for (ArticuloMfactDetalle articulosMfactDetalle : articulosMfactDetalle) {
+			obj = obj + articulosMfactDetalle.toString();
+		}
 		return obj;
 	}
 	

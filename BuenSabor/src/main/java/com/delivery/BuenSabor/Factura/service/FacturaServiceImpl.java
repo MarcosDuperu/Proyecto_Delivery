@@ -21,8 +21,8 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
-	public Optional<Factura> findById(Long id) {
-		return facturaRepository.findById(id);
+	public Optional<Factura> findByNumero(Integer numero) {
+		return facturaRepository.findById(numero);
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		facturaRepository.deleteById(id);
+	public void deleteByNumero(Integer numero) {
+		facturaRepository.deleteById(numero);
 	}
 
 }

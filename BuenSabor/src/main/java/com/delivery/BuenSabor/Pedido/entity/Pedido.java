@@ -1,6 +1,8 @@
 package com.delivery.BuenSabor.Pedido.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +19,7 @@ import javax.persistence.Table;
 
 import com.delivery.BuenSabor.DetallePedido.entity.DetallePedido;
 import com.delivery.BuenSabor.Factura.entity.Factura;
+import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
 import com.delivery.BuenSabor.cliente.entity.Cliente;
 import com.delivery.BuenSabor.domicilio.entity.Domicilio;
 
@@ -42,8 +45,7 @@ public class Pedido {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_detallePedido")
-	 private DetallePedido detallePedido[];
-	// FALTANTE FALTA GET AND SETER
+	 private List<DetallePedido> detallesPedido;
 	
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -54,9 +56,17 @@ public class Pedido {
 	@JoinColumn( name = "fk_cliente")
 	private Cliente cliente;
 	
-	@ManyToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn( name = "fk_domicilio")
 	private Domicilio domicilio;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn( name = "fk_mercado_pago_datos")
+	public MercadoPagoDatos mercadoPagoDatos;
+	
+	public Pedido() {
+		this.detallesPedido= new ArrayList<DetallePedido>();
+	}
 	
 	@PrePersist
 	public void prePersist() {
@@ -134,17 +144,52 @@ public class Pedido {
 	public void setDomicilio(Domicilio domicilio) {
 		this.domicilio = domicilio;
 	}
-	
-	
-	/*	@Override
-	private boolean equals(Object obj) {
+
+	public List<DetallePedido> getDetallesPedido() {
+		return detallesPedido;
+	}
+
+	public void setDetallesPedido(List<DetallePedido> detallesPedido) {
+		this.detallesPedido = detallesPedido;
+	}
+
+	public MercadoPagoDatos getMercadoPagoDatos() {
+		return mercadoPagoDatos;
+	}
+
+	public void setMercadoPagoDatos(MercadoPagoDatos mercadoPagoDatos) {
+		this.mercadoPagoDatos = mercadoPagoDatos;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
 		if (this == obj) {
+			return true;	
+		}
+		if(!(obj instanceof Pedido)) {
 			return false;
-			
 		}
 		Pedido p = (Pedido) obj;
 		return this.id != null && this.id.equals(p.getId());
-	}*/
+	}
+
+	@Override
+	public String toString() {
+		String obj = "NumeroPedido: "+  this.id 
+				+ "/ Estado: " + this.estado 
+				+ "/ TipoEnvio: " + this.tipoEnvio 
+				+ "/ Total: " + this.total 
+				+ "/ MercadoPago " + this.mercadoPagoDatos.toString()
+				+ "/ Cliente: " +this.cliente.getNombre() 
+				+ "/ Domicilio: " + this.domicilio.getLocalidad() + "-" + this.domicilio.getNumero() 
+				+ "/ FacturaId: " + this.factura.getNumero() 
+				+ "/ Fecha: " +this.fecha.toString() 
+				+ "/ HoraEstimada: " + this.horaEstimadaFin.toString();
+		for (DetallePedido detallePedido : detallesPedido) {
+			obj = obj + detallePedido.toString();
+		}
+		return obj;
+	}
 	
 	
 	

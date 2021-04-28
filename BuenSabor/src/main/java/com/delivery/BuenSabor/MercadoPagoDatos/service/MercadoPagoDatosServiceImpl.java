@@ -10,7 +10,7 @@ import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
 import com.delivery.BuenSabor.MercadoPagoDatos.repository.MpagoDatosRepository;
 
 @Service
-public class MercadoPagoDatosImpl implements MercadoPagoDatosService {
+public class MercadoPagoDatosServiceImpl implements MercadoPagoDatosService {
 
 	@Autowired
 	protected MpagoDatosRepository mPagoDatosRepository;
@@ -21,8 +21,8 @@ public class MercadoPagoDatosImpl implements MercadoPagoDatosService {
 	}
 
 	@Override
-	public Optional<MercadoPagoDatos> findById(Long id) {
-		return mPagoDatosRepository.findById(id);
+	public Optional<MercadoPagoDatos> findById(Long idPago) {
+		return mPagoDatosRepository.findById(idPago);
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class MercadoPagoDatosImpl implements MercadoPagoDatosService {
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		mPagoDatosRepository.deleteById(id);
+	public void deleteById(Long idPago) {
+		mPagoDatosRepository.deleteById(idPago);
 	}
 
 }

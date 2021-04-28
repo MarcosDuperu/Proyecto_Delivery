@@ -1,16 +1,21 @@
 package com.delivery.BuenSabor.cliente.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.delivery.BuenSabor.Pedido.entity.Pedido;
 import com.delivery.BuenSabor.domicilio.entity.Domicilio;
-import com.delivery.BuenSabor.usuario.entity.Usuario;
 
 @Entity
 @Table(name = "cliente")
@@ -32,9 +37,13 @@ public class Cliente {
 	@JoinColumn(name = "fk_domicilio")
 	private Domicilio domicilio;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_usuario")
-	private Usuario usuario;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(
+			name = "cliente_pedido",
+			joinColumns = @JoinColumn(name = "cliente_id"),
+			inverseJoinColumns = @JoinColumn(name = "pedido_id")
+			)
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 
 	public Long getId() {
 		return id;
@@ -84,15 +93,13 @@ public class Cliente {
 	public void setDomicilio(Domicilio domicilio) {
 		this.domicilio = domicilio;
 	}
-	
-	
 
-	public Usuario getUsuario() {
-		return usuario;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

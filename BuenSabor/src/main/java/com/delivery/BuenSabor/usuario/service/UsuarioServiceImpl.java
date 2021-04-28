@@ -4,11 +4,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.delivery.BuenSabor.usuario.entity.Usuario;
 import com.delivery.BuenSabor.usuario.repository.UsuarioRepository;
 
 @Service
+@Transactional
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
@@ -21,7 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Optional<Usuario> findByUsuario(String usuario) {
-		return usuarioRepository.findById(usuario);
+		return usuarioRepository.findByUsuario(usuario);
 	}
 
 	@Override
@@ -30,9 +32,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public void deleteByIdUsuario(String usuario) {
-		usuarioRepository.deleteById(usuario);
+	public void deleteById(Long id) {
+		usuarioRepository.deleteById(id);
 
+	}
+
+	@Override
+	public Optional<Usuario> findById(Long id) {
+		return usuarioRepository.findById(id);
+	}
+	
+	@Override
+	public boolean existsByUsuario(String usuario) {
+		return usuarioRepository.existsByUsuario(usuario);
 	}
 
 }

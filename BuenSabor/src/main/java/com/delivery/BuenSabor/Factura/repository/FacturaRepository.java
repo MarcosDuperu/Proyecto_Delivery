@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.delivery.BuenSabor.Factura.entity.Factura;
 
 @Repository
-public interface FacturaRepository extends CrudRepository<Factura, Long> {
+public interface FacturaRepository extends CrudRepository<Factura, Integer> {
 
 }

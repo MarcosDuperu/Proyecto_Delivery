@@ -10,7 +10,11 @@ public interface UsuarioService {
 	
 	public Optional<Usuario> findByUsuario(String usuario);
 	
+	public Optional<Usuario> findById(Long id);
+	
 	public Usuario save(Usuario usuario);
 	
-	public void deleteByIdUsuario(String usuario);
+	public void deleteById(Long id);
+	
+	public boolean existsByUsuario(String usuario);
 }

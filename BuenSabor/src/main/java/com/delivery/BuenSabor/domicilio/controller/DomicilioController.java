@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,18 @@ public class DomicilioController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(o.get());
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@RequestBody Domicilio domicilio, @PathVariable Long id)  {
+		Optional<Domicilio> o = service.findById(id);
+		if(!o.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		Domicilio domicilioDb = o.get();
+		domicilioDb.setLocalidad(domicilio.getLocalidad());
+		domicilioDb.setNumero(domicilio.getNumero());
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(domicilioDb));
 	}
 	
 	@PostMapping
