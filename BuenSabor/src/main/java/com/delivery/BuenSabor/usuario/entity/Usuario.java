@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.delivery.BuenSabor.cliente.entity.Cliente;
 
@@ -29,6 +30,11 @@ public class Usuario {
 	@Column(name = "usuario", unique = true)
 	private String usuario;
 	
+	@NotNull
+	@Column(unique = true)
+	private String email;
+	
+	@NotNull
 	private String clave;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -39,6 +45,13 @@ public class Usuario {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_cliente")
 	private Cliente cliente;
+	
+	public Usuario() {}
+	
+	public Usuario(String email, String password) {
+		this.email = email;
+		this.clave = password;
+	}
 
 	public String getUsuario() {
 		return usuario;
@@ -80,6 +93,14 @@ public class Usuario {
 		this.cliente = cliente;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public boolean login(Usuario user) {
 		if(this.usuario.equals(user.getUsuario())) {
 			if(this.clave.equals(user.getClave()))

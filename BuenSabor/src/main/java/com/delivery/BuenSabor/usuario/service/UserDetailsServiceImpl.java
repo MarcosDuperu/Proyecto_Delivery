@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.delivery.BuenSabor.usuario.entity.Usuario;
 import com.delivery.BuenSabor.usuario.entity.UsuarioPrincipal;
+import com.delivery.BuenSabor.usuario.entity.UsuarioPrincipalFactory;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
@@ -20,5 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		Usuario usuario = usuarioServiceImpl.findByUsuario(nombreUsuario).get();
 		return UsuarioPrincipal.build(usuario);
 	}
+	
+    public UserDetails loadUserByUsernameEmail(String email) throws UsernameNotFoundException {
+        Usuario usuario = usuarioServiceImpl.getByEmail(email).orElseThrow(()-> new UsernameNotFoundException("email no encontrado"));
+        return UsuarioPrincipalFactory.build(usuario);
+    }
 
 }
