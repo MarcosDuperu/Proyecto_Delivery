@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-home',
@@ -9,12 +10,25 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 export class HomeComponent implements OnInit {
   userLogged: SocialUser;
   isLogged: boolean;
-  constructor(private authServiceSocial: SocialAuthService) {}
+  nombreUsuario = '';
+  constructor(
+    private tokenService: TokenService,
+    private authServiceSocial: SocialAuthService
+  ) {}
 
   ngOnInit(): void {
-    this.authServiceSocial.authState.subscribe((data) => {
-      this.userLogged = data;
-      this.isLogged = this.userLogged != null;
-    });
+    if (this.tokenService.getToken()) {
+      this.isLogged = true;
+      this.nombreUsuario = this.tokenService.getUserName();
+    } else {
+      this.authServiceSocial.authState.subscribe((data) => {
+        this.userLogged = data;
+        this.isLogged = this.userLogged != null;
+      });
+    }
+    if (!this.tokenService.getToken()) {
+      this.isLogged = false;
+      this.nombreUsuario = '';
+    }
   }
 }

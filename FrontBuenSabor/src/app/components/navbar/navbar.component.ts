@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +10,20 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 })
 export class NavbarComponent implements OnInit {
   userLogged: SocialUser;
-  isLogged: boolean;
+  isLogged = false;
 
   constructor(
     private authServiceSocial: SocialAuthService,
+    private tokenService: TokenService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    if (this.tokenService.getToken()) {
+      this.isLogged = true;
+    } else {
+      this.isLogged = false;
+    }
     this.authServiceSocial.authState.subscribe((data) => {
       this.userLogged = data;
       this.isLogged = this.userLogged != null;
@@ -24,8 +31,10 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(): void {
+    this.tokenService.logOut();
     this.authServiceSocial.signOut().then((data) => {
       this.router.navigate(['/login']);
     });
+    window.location.reload();
   }
 }

@@ -9,17 +9,17 @@ import { LoginComponent } from './auth/login.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { RegistroComponent } from './auth/registro.component';
 
+import { ToastrModule } from 'ngx-toastr';
 //login social
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
 } from 'angularx-social-login';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider,
-} from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { interceptorProvider } from './services/interceptors/prod-interceptor.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,11 @@ import { HomeComponent } from './components/home/home.component';
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule,
+    ToastrModule.forRoot(),
+    FormsModule,
   ],
   providers: [
+    interceptorProvider,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
