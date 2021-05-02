@@ -14,6 +14,8 @@ public class UsuarioPrincipal implements UserDetails{
 
 	private String usuario;
 	
+	private String email;
+	
 	private String clave;
 	
 	private Cliente cliente;
@@ -29,51 +31,76 @@ public class UsuarioPrincipal implements UserDetails{
 		this.authorities = authorities;
 	}
 	
+	public UsuarioPrincipal(String email, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.email = email;
+        this.clave = password;
+        this.authorities = authorities;
+    }
+	
 	public static UsuarioPrincipal build(Usuario usuario) {
 		List<GrantedAuthority> authorities =
 				usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
 						.getRolNombre().name())).collect(Collectors.toList());
 		return new UsuarioPrincipal(usuario.getUsuario(), usuario.getClave(), usuario.getCliente(), authorities);
 	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
+	
 	@Override
 	public String getPassword() {
 		return clave;
 	}
+	
 	@Override
 	public String getUsername() {
 		return usuario;
 	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
+	
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
+	
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
+	
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
+	
 	public String getUsuario() {
 		return usuario;
 	}
+	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

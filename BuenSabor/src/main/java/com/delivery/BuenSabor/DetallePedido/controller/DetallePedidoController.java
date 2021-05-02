@@ -23,7 +23,7 @@ public class DetallePedidoController {
 	protected DetallePedidoServiceImpl service;
 
 	@GetMapping("/all")
-	public ResponseEntity<?> allCliente(){
+	public ResponseEntity<?> allDetalle(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	

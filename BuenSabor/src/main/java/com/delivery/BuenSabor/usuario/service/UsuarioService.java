@@ -17,4 +17,8 @@ public interface UsuarioService {
 	public void deleteById(Long id);
 	
 	public boolean existsByUsuario(String usuario);
+	
+	public Optional<Usuario> getByEmail(String email);
+	
+	public boolean existsEmail(String email);
 }

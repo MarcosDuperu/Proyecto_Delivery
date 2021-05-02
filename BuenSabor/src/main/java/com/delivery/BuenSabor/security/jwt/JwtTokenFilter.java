@@ -34,11 +34,19 @@ public class JwtTokenFilter extends OncePerRequestFilter{
 		try {
 			String token = getToken(req);
 			if(token != null && jwtProvider.validateToken(token)) {
+				if(jwtProvider.getnombreUsuarioFromToken(token)==null) {
+					String email = jwtProvider.getEmailFromToken(token);
+		            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
+		            UsernamePasswordAuthenticationToken auth =
+		                    new UsernamePasswordAuthenticationToken(email, null, userDetails.getAuthorities());
+		            SecurityContextHolder.getContext().setAuthentication(auth);
+				} else {
 				String nombreUsuario = jwtProvider.getnombreUsuarioFromToken(token);
 				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(nombreUsuario);
 				UsernamePasswordAuthenticationToken auth = 
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(auth);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("fail en el método doFilter");

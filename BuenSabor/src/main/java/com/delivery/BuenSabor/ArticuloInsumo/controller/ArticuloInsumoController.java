@@ -39,7 +39,7 @@ public class ArticuloInsumoController {
 		return ResponseEntity.ok(o.get());
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody ArticuloInsumo articuloInsumo, @PathVariable Long id){
 		Optional<ArticuloInsumo> o = service.findById(id);
@@ -59,14 +59,14 @@ public class ArticuloInsumoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(articuloDb));
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody ArticuloInsumo articuloInsumo) {
 		ArticuloInsumo articuloDb = service.save(articuloInsumo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(articuloDb);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 
 import com.delivery.BuenSabor.DetalleFactura.entity.DetalleFactura;
 import com.delivery.BuenSabor.Pedido.entity.Pedido;
+import com.delivery.BuenSabor.usuario.entity.Usuario;
 
 @Entity
 @Table(name = "factura")
@@ -49,6 +51,10 @@ public class Factura {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_pedido")
 	private Pedido pedido;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_usuario")
+	private Usuario usuario;
 
 	public Factura() {
 		this.detallesFacturas = new ArrayList<DetalleFactura>();
@@ -129,6 +135,14 @@ public class Factura {
 
 	public void setDetallesFacturas(List<DetalleFactura> detallesFacturas) {
 		this.detallesFacturas = detallesFacturas;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
