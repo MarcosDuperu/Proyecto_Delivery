@@ -16,13 +16,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
 import com.delivery.BuenSabor.MercadoPagoDatos.service.MercadoPagoDatosServiceImpl;
+import com.mercadopago.MercadoPago;
+import com.mercadopago.exceptions.MPConfException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.datastructures.preference.Item;
+
 
 @RestController
 @RequestMapping(path = "/api/v1/mpago")
 public class MercadoPagoDatosController {
 
+	
 	@Autowired
 	protected MercadoPagoDatosServiceImpl service;
 	
@@ -70,5 +78,18 @@ public class MercadoPagoDatosController {
 	public ResponseEntity<?> eliminarMpagoD(@PathVariable Long id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+	//El token tendría que pasarlo en los argumentos
+	@PostMapping("/efectuarpago/{factura}")
+	public ResponseEntity<?> realizarPago(@RequestBody Factura factura) throws MPException {
+		MercadoPago.SDK.setAccessToken("TEST-3502556041132733-050214-ef47a9e5aa971c2965bc747986c19440-187659340");
+		Preference preference = new Preference();
+		Item item = new Item();
+		item.setTitle("titulo producto")
+		.setQuantity(1)//cantidad de producto
+		.setUnitPrice((float)factura.getMontoDescuento());
+		preference.appendItem(item);
+		preference.save();
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(preference);
 	}
 }
