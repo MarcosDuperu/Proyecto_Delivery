@@ -79,7 +79,7 @@ public class UsuarioController {
 		if(nuevoUsuario.getRoles().contains("cliente"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
 		if(nuevoUsuario.getRoles().contains("jefe"))
-			roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMINISTRADOR).get());
+			roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		if(nuevoUsuario.getRoles().contains("cajero"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CAJERO).get());
 		if(nuevoUsuario.getRoles().contains("cocinero"))
@@ -116,7 +116,8 @@ public class UsuarioController {
 		else
 			usuario = saveUsuario(payload.getEmail());
 		TokenDto tokenRes = login (usuario);
-		return new ResponseEntity(tokenRes, HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(tokenRes);
+		//return new ResponseEntity(tokenRes, HttpStatus.OK);
 	}
 	
 	private TokenDto login(Usuario usuario) {
@@ -145,7 +146,7 @@ public class UsuarioController {
 		if(usuario.getRoles().contains("cliente"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
 		if(usuario.getRoles().contains("jefe"))
-			roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMINISTRADOR).get());
+			roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		if(usuario.getRoles().contains("cajero"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CAJERO).get());
 		if(usuario.getRoles().contains("cocinero"))

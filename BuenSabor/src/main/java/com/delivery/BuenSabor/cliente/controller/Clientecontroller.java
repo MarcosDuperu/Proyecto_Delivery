@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,11 +25,13 @@ public class Clientecontroller {
 	@Autowired
 	protected ClienteServiceImpl service;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/all")
 	public ResponseEntity<?> allCliente(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
 		Optional<Cliente> o = service.findById(id);
@@ -60,8 +63,9 @@ public class Clientecontroller {
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteDb);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
+	public ResponseEntity<?> eliminaraAdmin(@PathVariable Long id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +26,13 @@ public class MercadoPagoDatosController {
 	@Autowired
 	protected MercadoPagoDatosServiceImpl service;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/all")
 	public ResponseEntity<?> allMpagoDatos(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
 		Optional<MercadoPagoDatos> f = service.findById(id);
@@ -39,6 +42,7 @@ public class MercadoPagoDatosController {
 		return ResponseEntity.ok(f.get());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody MercadoPagoDatos datos, @PathVariable Long id) {
 		Optional<MercadoPagoDatos> o = service.findById(id);
@@ -54,12 +58,14 @@ public class MercadoPagoDatosController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(datosDb));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody MercadoPagoDatos mPagoD) {
 		MercadoPagoDatos mPD = service.save(mPagoD);
 		return ResponseEntity.status(HttpStatus.CREATED).body(mPD);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarMpagoD(@PathVariable Long id) {
 		service.deleteById(id);

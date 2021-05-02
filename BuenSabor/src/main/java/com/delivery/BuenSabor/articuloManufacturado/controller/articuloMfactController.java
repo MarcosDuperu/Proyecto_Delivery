@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class articuloMfactController {
 		return ResponseEntity.ok(o.get());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody ArticuloMfact articulo, @PathVariable Long id) {
 		Optional<ArticuloMfact> o = service.findById(id);
@@ -54,12 +56,14 @@ public class articuloMfactController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(articuloDb));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody ArticuloMfact articuloMfact) {
 		ArticuloMfact articuloDb = service.save(articuloMfact);
 		return ResponseEntity.status(HttpStatus.CREATED).body(articuloDb);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);

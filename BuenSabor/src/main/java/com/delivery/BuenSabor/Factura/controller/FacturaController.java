@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,20 +26,23 @@ public class FacturaController {
 	@Autowired
 	protected FacturaServiceImpl service;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/all")
 	public ResponseEntity<?> allFacturas(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/{numero}")
 	public ResponseEntity<?> byId(@PathVariable Integer numero){
-		Optional<Factura> f = service.findByNumero(numero);
-		if(!f.isPresent()) {
+		Optional<Factura> o = service.findByNumero(numero);
+		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(f.get());
+		return ResponseEntity.ok(o.get());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@PutMapping("/{numero}")
 	public ResponseEntity<?> update(@RequestBody Factura factura, @PathVariable Integer numero) {
 		Optional<Factura> o = service.findByNumero(numero);
@@ -57,12 +61,14 @@ public class FacturaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(facturaDb));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody Factura cliente) {
 		Factura facturaeDb = service.save(cliente);
 		return ResponseEntity.status(HttpStatus.CREATED).body(facturaeDb);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@DeleteMapping("/{numero}")
 	public ResponseEntity<?> eliminarUna(@PathVariable Integer numero) {
 		service.deleteByNumero(numero);
