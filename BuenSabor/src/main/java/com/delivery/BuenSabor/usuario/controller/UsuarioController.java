@@ -73,6 +73,7 @@ public class UsuarioController {
 			return ResponseEntity.badRequest().build();
 		Usuario usuario = new Usuario();
 		usuario.setUsuario(nuevoUsuario.getUsuario());
+		usuario.setEmail(nuevoUsuario.getEmail());
 		usuario.setClave(passwordEncoder.encode(nuevoUsuario.getPassword()));
 		usuario.setCliente(nuevoUsuario.getCliente());
 		Set<Rol> roles = new HashSet<>();

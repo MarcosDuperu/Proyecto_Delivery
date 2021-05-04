@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/services/token.service';
 export class NavbarComponent implements OnInit {
   userLogged: SocialUser;
   isLogged = false;
+  isLoggedSocial: boolean;
 
   constructor(
     private authServiceSocial: SocialAuthService,
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
     this.authServiceSocial.authState.subscribe((data) => {
       this.userLogged = data;
       this.isLogged = this.userLogged != null;
+      this.isLoggedSocial = this.userLogged != null;
     });
   }
 
