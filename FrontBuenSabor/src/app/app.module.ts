@@ -20,6 +20,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { interceptorProvider } from './services/interceptors/prod-interceptor.service';
 import { FormsModule } from '@angular/forms';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     RegistroComponent,
     NavbarComponent,
     HomeComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
