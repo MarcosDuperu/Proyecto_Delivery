@@ -19,7 +19,7 @@
         </li>
       </ul>
       <img *ngIf="isLogged" src="{{userLogged.photoUrl}}" class="rounded-circle mr-3" style="width: 50px">
-      <button *ngIf="isLogged" type="button" class="btn btn-outline-primary" routerLink="/Perfil"> Perfil</button>
+      <button *ngIf="isLogged" type="button" class="btn btn-outline-primary" routerLink="/perfil"> Perfil</button>
       <button *ngIf="!isLogged" class="btn btn-outline-success" type="submit" routerLink="/login">
         <i class="fas fa-sign-in-alt fa-lg"> </i> Iniciar Sesión</button>
       <button *ngIf="isLogged" class="btn btn-outline-danger" type="submit" (click)="logOut()">
