@@ -40,8 +40,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/v1/usuario/auth")
-@CrossOrigin
 public class UsuarioController {
 
 	@Autowired
