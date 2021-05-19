@@ -21,6 +21,12 @@ import { HomeComponent } from './components/home/home.component';
 import { interceptorProvider } from './services/interceptors/prod-interceptor.service';
 import { FormsModule } from '@angular/forms';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { FacturasComponent } from './components/perfil/facturas/facturas.component';
+import { PedidosComponent } from './components/perfil/pedidos/pedidos.component';
+import { FacturaService } from './services/factura.service';
+import { CreateComponent } from './components/perfil/facturas/create/create.component';
+import { UpdateComponent } from './components/perfil/facturas/update/update.component';
+import { DeleteComponent } from './components/perfil/facturas/delete/delete.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +37,11 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     NavbarComponent,
     HomeComponent,
     PerfilComponent,
+    FacturasComponent,
+    PedidosComponent,
+    CreateComponent,
+    UpdateComponent,
+    DeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +53,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
   ],
   providers: [
     interceptorProvider,
+    FacturaService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
