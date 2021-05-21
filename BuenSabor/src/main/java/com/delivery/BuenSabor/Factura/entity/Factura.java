@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.delivery.BuenSabor.DetalleFactura.entity.DetalleFactura;
 import com.delivery.BuenSabor.Pedido.entity.Pedido;
@@ -42,6 +44,7 @@ public class Factura {
 	@Column(name = "total_costo")
 	private double totalCosto;
 	
+	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
 	@OneToMany(cascade = CascadeType.ALL)
