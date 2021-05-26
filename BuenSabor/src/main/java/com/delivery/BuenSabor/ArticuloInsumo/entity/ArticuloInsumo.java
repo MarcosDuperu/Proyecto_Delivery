@@ -46,17 +46,18 @@ public class ArticuloInsumo {
 	@Column(name = "es_insumo")
 	private boolean esInsumo;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "fk_rubro_articulo")
 	private RubroArticulo rubroArticulo;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "articulo_mfact_detalle_id")
 	@JoinTable(
 			name = "artinsumo_artmfact",
 			joinColumns = @JoinColumn(name = " art_insumo_id"),
 			inverseJoinColumns = @JoinColumn(name = "articulo_mfact_id")
 			)
-	private List<ArticuloMfactDetalle> articuloMfactDetalle = new ArrayList<ArticuloMfactDetalle>();
+	private List<ArticuloMfactDetalle> articuloMfactDetalle = new ArrayList<ArticuloMfactDetalle>();*/
 
 	public Long getId() {
 		return id;
@@ -130,13 +131,13 @@ public class ArticuloInsumo {
 		this.rubroArticulo = rubroArticulo;
 	}
 
-	public List<ArticuloMfactDetalle> getArticuloMfactDetalle() {
+	/*public List<ArticuloMfactDetalle> getArticuloMfactDetalle() {
 		return articuloMfactDetalle;
 	}
 
 	public void setArticuloMfactDetalle(List<ArticuloMfactDetalle> articuloMfactDetalle) {
 		this.articuloMfactDetalle = articuloMfactDetalle;
-	}
+	}*/
 
 	@Override
 	public boolean equals(Object obj) {
@@ -161,9 +162,9 @@ public class ArticuloInsumo {
 				"/ UnidadDeMedida: " + this.unidadMedida +
 				"/ EsInsumo: " + this.esInsumo +
 				"/ RubroArticulo: " + this.rubroArticulo.getDenominacion();
-		for (ArticuloMfactDetalle articuloMfactDetalle2 : articuloMfactDetalle) {
+		/*for (ArticuloMfactDetalle articuloMfactDetalle2 : articuloMfactDetalle) {
 			obj = obj + articuloMfactDetalle2;
-		}
+		}*/
 		return obj;
 	}
 	
