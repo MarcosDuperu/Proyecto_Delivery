@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MercadoPagoService } from 'src/app/services/mercado-pago.service';
 import { Producto } from 'src/app/models/producto';
 import { ProductosService } from 'src/app/services/productos.service';
+import { CarritoService } from 'src/app/services/carrito.service';
 declare var MercadoPago;
 
 @Component({
@@ -17,6 +18,7 @@ export class ProductoDetalleComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private service: ProductosService,
+    private _cartService: CarritoService,
     private serviceMP: MercadoPagoService
   ) {}
 
@@ -47,5 +49,7 @@ export class ProductoDetalleComponent implements OnInit {
       }
     });
   }
-  comprar($event) {}
+  comprar(prod: Producto) {
+    this._cartService.changeCart(prod);
+  }
 }

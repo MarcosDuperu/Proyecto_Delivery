@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   userLogged: SocialUser;
   isLogged = false;
   isLoggedSocial: boolean;
+  public openCart: boolean = false;
 
   constructor(
     private authServiceSocial: SocialAuthService,
@@ -39,5 +40,9 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/login']);
     });
     window.location.reload();
+  }
+
+  public cart() {
+    this.openCart = !this.openCart;
   }
 }

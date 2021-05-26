@@ -4,6 +4,7 @@ export class Producto {
   precioVenta: number;
   imagen: string;
   esInsumo: boolean;
+  cantidad: number;
 
   /* constructor(
     id: number,
