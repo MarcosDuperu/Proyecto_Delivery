@@ -3,6 +3,7 @@ package com.delivery.BuenSabor.usuario.controller;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -40,7 +41,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/v1/usuario/auth")
 public class UsuarioController {
 
@@ -89,6 +90,21 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
 	}
 	
+	@PostMapping("/cargar")
+	public ResponseEntity<?> cargar(@RequestBody Usuario usuario) {
+		Optional<Usuario> o = usuarioService.getByEmail(usuario.getEmail());
+		if(o.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		Usuario usuarioDb = o.get();
+		usuarioDb.setClave(passwordEncoder.encode(usuario.getClave()));
+		usuarioDb.setEmail(usuario.getEmail());
+		usuarioDb.setRoles(usuario.getRoles());
+		usuarioDb.setUsuario(usuario.getUsuario());
+		usuarioDb.setCliente(usuario.getCliente());
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioDb));
+	}
+	
 	@PostMapping("/login")
 	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
 		if(bindingResult.hasErrors())
@@ -130,7 +146,7 @@ public class UsuarioController {
 		tokenDto.setValue(jwt);
 		return tokenDto;
 	}
-	private TokenDto loginEmail(Usuario usuario) {
+	/*private TokenDto loginEmail(Usuario usuario) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(usuario.getEmail(), secretPsw)
 				);
@@ -139,7 +155,7 @@ public class UsuarioController {
 		TokenDto tokenDto = new TokenDto();
 		tokenDto.setValue(jwt);
 		return tokenDto;
-	}
+	}*/
 
 	private Usuario saveUsuario(String email) {
 		Usuario usuario = new Usuario(email, passwordEncoder.encode(secretPsw));

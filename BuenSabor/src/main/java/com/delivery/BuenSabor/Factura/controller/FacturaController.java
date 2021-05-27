@@ -21,7 +21,7 @@ import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.Factura.service.FacturaServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/v1/factura")
 public class FacturaController {
 

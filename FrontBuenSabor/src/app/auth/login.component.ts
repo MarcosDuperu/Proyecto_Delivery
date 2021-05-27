@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
       .then((data) => {
         this.userLogged = data;
         this.isLogged = true;
-        this.router.navigate(['/']);
+        this.router.navigate(['/registro']);
       });
   }
 

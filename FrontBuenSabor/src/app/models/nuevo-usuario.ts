@@ -8,5 +8,6 @@ export class NuevoUsuario {
     this.usuario = usuario;
     this.email = email;
     this.password = password;
+    this.authorities = ['cliente'];
   }
 }
