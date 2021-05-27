@@ -1,11 +1,13 @@
 package com.delivery.BuenSabor.ArticuloInsumo.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
 import com.delivery.BuenSabor.ArticuloInsumo.service.ArticuloInsumoServiceImpl;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path ="/api/v1/articuloinsumo")
 public class ArticuloInsumoController {
 
@@ -47,7 +50,7 @@ public class ArticuloInsumoController {
 			return ResponseEntity.notFound().build();
 		}
 		ArticuloInsumo articuloDb = o.get();
-		articuloDb.setArticuloMfactDetalle(articuloInsumo.getArticuloMfactDetalle());
+		//articuloDb.setArticuloMfactDetalle(articuloInsumo.getArticuloMfactDetalle());
 		articuloDb.setDenominacion(articuloInsumo.getDenominacion());
 		articuloDb.setEsInsumo(articuloInsumo.getEsInsumo());
 		articuloDb.setPrecioCompra(articuloInsumo.getPrecioCompra());
@@ -71,5 +74,10 @@ public class ArticuloInsumoController {
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/like")
+	public ResponseEntity<?> like(){
+		return ResponseEntity.ok().body(service.findByLike());
 	}
 }

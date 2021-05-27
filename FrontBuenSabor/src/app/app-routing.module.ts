@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './auth/login.component';
 import { RegistroComponent } from './auth/registro.component';
-import { FacturasComponent } from './components/perfil/facturas/facturas.component';
-import { PedidosComponent } from './components/perfil/pedidos/pedidos.component';
+import { FacturasComponent } from './components/facturas/facturas.component';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { HomeComponent } from './components/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { ProductosComponent } from './components/productos/productos.component';
 
-import { CreateComponent } from './components/perfil/facturas/create/create.component';
-import { UpdateComponent } from './components/perfil/facturas/update/update.component';
-import { DeleteComponent } from './components/perfil/facturas/delete/delete.component';
+import { CreateComponent } from './components/facturas/create/create.component';
+import { UpdateComponent } from './components/facturas/update/update.component';
+import { DeleteComponent } from './components/facturas/delete/delete.component';
+import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,6 +30,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
