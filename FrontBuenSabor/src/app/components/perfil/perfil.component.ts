@@ -26,6 +26,8 @@ export class PerfilComponent implements OnInit {
 
     this.router.navigate(['pedidos'])
   }
+ 
+ 
 
   ngOnInit(): void {
     if (this.tokenService.getToken()) {

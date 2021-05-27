@@ -17,9 +17,12 @@ export class FacturaService {
   getFacturas(){
     return this.http.get<facturas[]>(this.listar);
   }
-
+  getFacturasbyNumero(numero:facturas){
+    return this.http.get<facturas[]>(this.listarId+"/"+numero);
+  }
   createFactura(facturas: facturas){return this.http.post<facturas[]>(this.listarId,facturas)}
-  deleteFacturas(){return this.http.delete<facturas[]>(this.delete);}
+  deleteFacturas(facturas: facturas){return this.http.delete<facturas[]>(this.listarId+"/"+facturas.numero)}
+  editarFactura(facturas: facturas){return this.http.put<facturas[]>(this.listarId+"/"+facturas.numero,facturas)}
   
   
 }

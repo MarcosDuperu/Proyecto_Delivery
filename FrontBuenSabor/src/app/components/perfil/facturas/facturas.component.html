@@ -34,14 +34,14 @@
             <td>{{ factura.formaPago }}</td>
             <td>
               <button
-                (click)="editarFactura()"
+                (click)="editarFactura(facturas)"
                 style="margin-right: 10px"
                 class="btn btn-warning"
               >
                 Editar
               </button>
               <button
-                (click)="borrarFactura()"
+                (click)="delete(factura)"
                 style="margin-right: 10px"
                 class="btn btn-danger"
               >

@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'facturas', component:FacturasComponent },
   { path: 'nuevaFactura', component:CreateComponent},
   { path: 'editarFactura', component:UpdateComponent},
-  { path: 'borrarFactura', component:DeleteComponent},
+  { path: 'eliminarFactura', component:DeleteComponent},
   { path: 'pedidos', component:PedidosComponent},
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 

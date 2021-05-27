@@ -30,13 +30,9 @@ export class FacturasComponent implements OnInit {
 
   //Ruta Update Factura
 
-  editarFactura(){this.router.navigate(['editarFactura']);}
-
-  //Ruta Delete Factura
-
-  borrarFactura(){this.router.navigate(['borrarFactura']);}
-
-
+  editarFactura(facturas: facturas):void{
+    localStorage.setItem("numero",facturas.numero.toString())
+    this.router.navigate(['editarFactura']);}
 
   ngOnInit(): void {
     this.service.getFacturas().subscribe((data) => {
