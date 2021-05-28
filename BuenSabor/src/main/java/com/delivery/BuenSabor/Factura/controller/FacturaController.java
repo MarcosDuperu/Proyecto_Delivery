@@ -67,8 +67,8 @@ public class FacturaController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Factura cliente) {
-		Factura facturaDb = service.save(cliente);
+	public ResponseEntity<?> guardar(@RequestBody Factura factura,@PathVariable Integer numero) {
+		Factura facturaDb = service.save(factura);
 		return ResponseEntity.status(HttpStatus.CREATED).body(facturaDb);
 	}
 	

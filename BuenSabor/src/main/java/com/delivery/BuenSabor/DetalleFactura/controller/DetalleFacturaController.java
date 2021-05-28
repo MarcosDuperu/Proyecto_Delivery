@@ -3,6 +3,7 @@ package com.delivery.BuenSabor.DetalleFactura.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +25,7 @@ import com.delivery.BuenSabor.DetalleFactura.entity.DetalleFactura;
 @RequestMapping(path = "/api/v1/detallefactura")
 public class DetalleFacturaController {
 	
+	@Autowired
 	protected DetalleFacturaServiceImpl service;
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO') or hasRole('ROLE_CLIENTE')")
@@ -53,7 +55,7 @@ public class DetalleFacturaController {
 		detalleDb.setArticuloInsumo(detalle.getArticuloInsumo());
 		detalleDb.setArticuloMfact(detalle.getArticuloMfact());
 		detalleDb.setCantidad(detalle.getCantidad());
-		//detalleDb.setFactura(detalle.getFactura());
+		detalleDb.setFactura(detalle.getFactura());
 		detalleDb.setSubtotal(detalle.getSubtotal());
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(detalleDb));
 	}

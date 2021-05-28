@@ -9,7 +9,6 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ProductosComponent } from './components/productos/productos.component';
 
 import { CreateComponent } from './components/facturas/create/create.component';
-import { UpdateComponent } from './components/facturas/update/update.component';
 import { DeleteComponent } from './components/facturas/delete/delete.component';
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 
@@ -21,9 +20,9 @@ const routes: Routes = [
   { path: 'lista', component: ProductosComponent },
   { path: 'facturas', component:FacturasComponent },
   { path: 'nuevaFactura', component:CreateComponent},
-  { path: 'editarFactura', component:UpdateComponent},
   { path: 'eliminarFactura', component:DeleteComponent},
   { path: 'pedidos', component:PedidosComponent},
+  { path: 'productos/detalle/:id/:insumo',component: ProductoDetalleComponent},
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 
 ];
