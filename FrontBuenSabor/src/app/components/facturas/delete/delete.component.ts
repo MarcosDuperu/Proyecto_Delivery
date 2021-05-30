@@ -9,13 +9,9 @@ import { FacturaService } from 'src/app/services/factura.service';
   styleUrls: ['./delete.component.css']
 })
 export class DeleteComponent implements OnInit {
-  facturas:facturas[];
-  constructor(private router: Router,private FacturaService:FacturaService) { }
 
-  delete(factura:facturas){return this.FacturaService.deleteFacturas(factura)
-  .subscribe(data =>{this.facturas = this.facturas.filter(f=>f!=factura)})
-}
-  
+  constructor() { }
+
   ngOnInit(): void {
     
   }

@@ -21,7 +21,7 @@ import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.Factura.service.FacturaServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/v1/factura")
 public class FacturaController {
 
@@ -67,12 +67,13 @@ public class FacturaController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Factura factura,@PathVariable Integer numero) {
+	public ResponseEntity<?> guardar(@RequestBody Factura factura) {
 		Factura facturaDb = service.save(factura);
 		return ResponseEntity.status(HttpStatus.CREATED).body(facturaDb);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("/{numero}")
 	public ResponseEntity<?> eliminarUna(@PathVariable Integer numero) {
 		service.deleteByNumero(numero);

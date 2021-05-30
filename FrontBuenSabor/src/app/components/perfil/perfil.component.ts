@@ -30,15 +30,6 @@ export class PerfilComponent implements OnInit {
  
 
   ngOnInit(): void {
-    if (this.tokenService.getToken()) {
-      this.isLogged = true;
-    } else {
-      this.isLogged = false;
-    }
-    this.authServiceSocial.authState.subscribe((data) => {
-      this.userLogged = data;
-      this.isLogged = this.userLogged != null;
-      this.isLoggedSocial = this.userLogged != null;
-    });
+   
   }
 }
