@@ -9,11 +9,17 @@ import { FacturaService } from 'src/app/services/factura.service';
   styleUrls: ['./create.component.css'],
 })
 export class CreateComponent implements OnInit {
-  constructor(private router: Router, private service: FacturaService) {}
+
+  factura:facturas = new facturas();
+  constructor(private router: Router, private FacturaService: FacturaService) {}
 
   ngOnInit(): void {}
 
-  Guardar() {
-    alert('Factura añadida con exito!');
+  Guardar(factura) {
+    this.FacturaService.createFactura(factura).subscribe(data => {
+      alert('Factura añadida con exito!');
+      this.router.navigate(['facturas'])
+    })
+    
   }
 }
