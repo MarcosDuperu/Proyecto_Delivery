@@ -52,6 +52,7 @@ public class DomicilioController {
 		}
 		Domicilio domicilioDb = o.get();
 		domicilioDb.setLocalidad(domicilio.getLocalidad());
+		domicilioDb.setCalle(domicilio.getCalle());
 		domicilioDb.setNumero(domicilio.getNumero());
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(domicilioDb));
 	}

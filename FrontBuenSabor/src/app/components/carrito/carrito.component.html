@@ -1,7 +1,7 @@
 <div class="container">
   <div class="shopping-cart">
     <div class="shopping-cart-header">
-      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{totalCantidad}}</span>
+      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{cantidadTotal}}</span>
       <div class="shopping-cart-total">
         <span class="">Total:</span>
         <span class="main-clor-text">${{precioTotal}}</span>
@@ -13,7 +13,7 @@
         <span class="">{{producto.denominacion}}</span>
         <span class="">{{producto.precio}}</span>
         <span class="">{{cantidad}}</span>
-        <button type="button" class="btn btn-danger ml-4" (clicK)="remove(producto"> Remover</button>
+        <button type="button" class="btn btn-danger ml-4" (click)="remove(producto)"> Remover</button>
       </li>
     </ul>
 

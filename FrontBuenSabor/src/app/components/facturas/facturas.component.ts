@@ -16,11 +16,10 @@ export class FacturasComponent implements OnInit {
   isLoggedSocial: boolean;
 
   facturas: facturas[];
+  f:facturas= new facturas();
   constructor(
-    private service: FacturaService,
+    private FacturaService: FacturaService,
     private router: Router,
-    private authServiceSocial: SocialAuthService,
-    private tokenService: TokenService
   ) {}
 
   //Ruta Create Factura
@@ -30,28 +29,29 @@ export class FacturasComponent implements OnInit {
 
   //Ruta Update Factura
 
-  editarFactura(){this.router.navigate(['editarFactura']);}
+  editarFactura(facturas: facturas):void{
+    localStorage.setItem("numero",facturas.numero.toString())
+    this.router.navigate(['editarFactura']);}
 
-  //Ruta Delete Factura
-
-  borrarFactura(){this.router.navigate(['borrarFactura']);}
-
-
+    
+    delete(factura){
+      if(confirm("Esta seguro que desea eliminar esta factura?")){
+      this.FacturaService.deleteFacturas(factura)
+      .subscribe(data =>{
+        this.facturas = this.facturas!.filter(f=>f!==factura);
+        this.router.navigate(['facturas'])
+        
+      
+    })}
+    }
+          
+      
 
   ngOnInit(): void {
-    this.service.getFacturas().subscribe((data) => {
+    this.FacturaService.getFacturas().subscribe((data) => {
       this.facturas = data;
     });
 
-    if (this.tokenService.getToken()) {
-      this.isLogged = true;
-    } else {
-      this.isLogged = false;
-    }
-    this.authServiceSocial.authState.subscribe((data) => {
-      this.userLogged = data;
-      this.isLogged = this.userLogged != null;
-      this.isLoggedSocial = this.userLogged != null;
-    });
+
   }
 }

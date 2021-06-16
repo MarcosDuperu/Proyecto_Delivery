@@ -1,15 +1,19 @@
 package com.delivery.BuenSabor.DetalleFactura.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
+import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "detalle_factura")
@@ -26,13 +30,29 @@ public class DetalleFactura {
 	@JoinColumn(name = "fk_factura")
 	private Factura factura;*/
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_articulo_mfact")
 	private ArticuloMfact articuloMfact;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_articulo_insumo")
 	private ArticuloInsumo articuloInsumo;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	//@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "numero")
+	private Factura factura;
+
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
 
 	public Long getId() {
 		return id;
@@ -98,9 +118,7 @@ public class DetalleFactura {
 	public String toString() {
 		String obj = "ID:" + this.id
 				+ "/ Cantidad: " + this.cantidad 
-				+ "/ Subtotal: " + this.subtotal
-				+ "/ ArtMfact: " + this.articuloMfact
-				+ "/ ArtInsumo: " + this.articuloInsumo;
+				+ "/ Subtotal: " + this.subtotal;
 		return obj;
 	}
 

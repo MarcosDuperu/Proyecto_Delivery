@@ -25,7 +25,6 @@ import { FacturasComponent } from './components/facturas/facturas.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { FacturaService } from './services/factura.service';
 import { CreateComponent } from './components/facturas/create/create.component';
-import { UpdateComponent } from './components/facturas/update/update.component';
 import { DeleteComponent } from './components/facturas/delete/delete.component';
 import { ItemProductoComponent } from './components/productos/item-producto/item-producto.component';
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
@@ -43,7 +42,6 @@ import { CarritoComponent } from './components/carrito/carrito.component';
     FacturasComponent,
     PedidosComponent,
     CreateComponent,
-    UpdateComponent,
     DeleteComponent,
     ItemProductoComponent,
     ProductoDetalleComponent,

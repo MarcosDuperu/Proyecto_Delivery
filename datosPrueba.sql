@@ -1,4 +1,4 @@
-drop database db_delivery;
+
 use db_delivery;
 insert into rol value(1,"ROLE_CLIENTE");
 insert into rol value(2,"ROLE_ADMIN");
