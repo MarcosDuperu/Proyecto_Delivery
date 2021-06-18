@@ -10,7 +10,7 @@
     <p><b>Precio:</b> ${{producto.precioVenta}}</p>
     <!-- <p><b>descripcion:</b> {{producto.descripcion}}</p> -->
     <p>
-      <input type="number" [(ngModel)]="cantidad">
+      <input type="number" [(ngModel)]="producto.cantidad">
     </p>
     <div>
       <a [routerLink]="['/productos']" class="btn btn-outline-secondary btn-block">Volver</a>
