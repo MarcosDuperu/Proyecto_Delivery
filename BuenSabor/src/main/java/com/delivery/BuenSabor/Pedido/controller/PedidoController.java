@@ -60,8 +60,14 @@ public class PedidoController {
 		pedidoDb.setFecha(pedido.getFecha());
 		pedidoDb.setHoraEstimadaFin(pedido.getHoraEstimadaFin());
 		pedidoDb.setMercadoPagoDatos(pedido.getMercadoPagoDatos());
-		pedidoDb.setTipoEnvio(pedido.getTipoEnvio());
-		pedidoDb.setTotal(pedido.getTotal());
+		
+		//Validacion de retiro si es local aplica el 10% de descuento
+		
+		if(pedido.getTipoEnvio() == "Local") {
+			pedidoDb.setTotal(pedido.getTotal() - (0.1 * pedido.getTotal()));
+		}
+		
+		else {pedidoDb.setTotal(pedido.getTotal());}
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(pedidoDb));
 	}
 	

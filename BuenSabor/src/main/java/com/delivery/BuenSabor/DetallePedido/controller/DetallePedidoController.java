@@ -2,6 +2,7 @@ package com.delivery.BuenSabor.DetallePedido.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import com.delivery.BuenSabor.DetallePedido.entity.DetallePedido;
 @RequestMapping(path = "/api/v1/detallepedido")
 public class DetallePedidoController {
 	
+	@Autowired
 	protected DetallePedidoServiceImpl service;
 
 	@GetMapping("/all")
