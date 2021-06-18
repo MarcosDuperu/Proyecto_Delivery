@@ -26,22 +26,17 @@ public class DetalleFactura {
 	
 	private double subtotal;
 	
-	/*@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_factura")
-	private Factura factura;*/
+	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_articulo_mfact")
+	private ArticuloMfact articuloMfact;
 	
 	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_articulo_mfact")
-	private ArticuloMfact articuloMfact;
-	
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_articulo_insumo")
+	@JoinColumn(name = "id_articulo_insumo")
 	private ArticuloInsumo articuloInsumo;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	//@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "numero")
 	private Factura factura;
@@ -78,14 +73,6 @@ public class DetalleFactura {
 		this.subtotal = subtotal;
 	}
 
-	/*public Factura getFactura() {
-		return factura;
-	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
-	}*/
-	
 	public ArticuloMfact getArticuloMfact() {
 		return articuloMfact;
 	}

@@ -22,7 +22,6 @@ import com.delivery.BuenSabor.Factura.entity.Factura;
 import com.delivery.BuenSabor.MercadoPagoDatos.entiy.MercadoPagoDatos;
 import com.delivery.BuenSabor.MercadoPagoDatos.service.MercadoPagoDatosServiceImpl;
 import com.mercadopago.MercadoPago;
-import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.preference.Item;
@@ -103,11 +102,6 @@ public class MercadoPagoDatosController {
 			}
 			
 		}
-		//Item item = new Item();
-		//item.setTitle("titulo producto")
-		//.setQuantity(1)//cantidad de producto
-		//.setUnitPrice((float)factura.getMontoDescuento());
-		//preference.appendItem(item);
 		preference.save();
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(preference);
 	}
