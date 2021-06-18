@@ -29,6 +29,7 @@ import { DeleteComponent } from './components/facturas/delete/delete.component';
 import { ItemProductoComponent } from './components/productos/item-producto/item-producto.component';
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
+import { UpdateComponent } from './components/facturas/update/update.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CarritoComponent } from './components/carrito/carrito.component';
     ItemProductoComponent,
     ProductoDetalleComponent,
     CarritoComponent,
+    UpdateComponent,
   ],
   imports: [
     BrowserModule,

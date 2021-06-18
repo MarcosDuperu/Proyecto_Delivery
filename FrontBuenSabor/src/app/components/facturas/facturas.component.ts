@@ -29,9 +29,8 @@ export class FacturasComponent implements OnInit {
 
   //Ruta Update Factura
 
-  editarFactura(facturas: facturas):void{
-    localStorage.setItem("numero",facturas.numero.toString())
-    this.router.navigate(['editarFactura']);}
+editarFactura() {this.router.navigate(['editarFactura']);}
+    
 
     
     delete(factura){
