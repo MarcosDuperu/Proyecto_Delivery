@@ -72,8 +72,8 @@ public class articuloMfactController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping("/like")
+	/*@GetMapping("/like")
 	public ResponseEntity<?> like(){
 		return ResponseEntity.ok().body(service.findByLike());
-	}
+	}*/
 }

@@ -40,14 +40,6 @@ public class Pedido {
 	
 	@Column(name = "tipo_envio")
 	private String tipoEnvio;
-	
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public void setTipoEnvio(String tipoEnvio) {
-		this.tipoEnvio = tipoEnvio;
-	}
 
 	private double total;
 	
@@ -56,7 +48,6 @@ public class Pedido {
 	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
 	@OneToMany(mappedBy="pedido",fetch = FetchType.LAZY)
 	 private List<DetallePedido> detallesPedido;
-	
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_factura")
@@ -99,6 +90,13 @@ public class Pedido {
 		this.horaEstimadaFin = horaEstimadaFin;
 	}
 
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public void setTipoEnvio(String tipoEnvio) {
+		this.tipoEnvio = tipoEnvio;
+	}
 	public double getTotal() {
 		return total;
 	}

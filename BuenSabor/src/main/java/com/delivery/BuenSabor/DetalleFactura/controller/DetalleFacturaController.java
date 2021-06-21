@@ -28,13 +28,13 @@ public class DetalleFacturaController {
 	@Autowired
 	protected DetalleFacturaServiceImpl service;
 
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO') or hasRole('ROLE_CLIENTE')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/all")
 	public ResponseEntity<?> allDetalle(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO') or hasRole('ROLE_CLIENTE')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id){
 		Optional<DetalleFactura> o = service.findById(id);
@@ -60,14 +60,14 @@ public class DetalleFacturaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(detalleDb));
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO') or hasRole('ROLE_CLIENTE')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody DetalleFactura detalle_factura) {
 		DetalleFactura detalleFacturadb = service.save(detalle_factura);
 		return ResponseEntity.status(HttpStatus.CREATED).body(detalleFacturadb);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CAJERO')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);

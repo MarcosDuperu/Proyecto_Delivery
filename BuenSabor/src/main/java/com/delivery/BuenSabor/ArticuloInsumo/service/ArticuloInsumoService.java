@@ -15,4 +15,6 @@ public interface ArticuloInsumoService {
 	public void deleteById(Long id);
 	
 	public Iterable<ArticuloInsumo> findByLike();
+	
+	public Iterable<ArticuloInsumo> findByInsumo();
 }

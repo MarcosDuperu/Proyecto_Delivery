@@ -1,7 +1,5 @@
 package com.delivery.BuenSabor.articuloMfactDetalle.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +13,6 @@ import javax.persistence.Table;
 import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
 import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -38,7 +35,6 @@ public class ArticuloMfactDetalle{
 	private ArticuloInsumo articuloInsumo;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	//@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_articulo_mfact")
 	private ArticuloMfact articuloMfact;

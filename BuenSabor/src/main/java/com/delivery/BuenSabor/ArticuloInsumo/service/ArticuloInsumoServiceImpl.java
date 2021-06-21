@@ -38,4 +38,9 @@ public class ArticuloInsumoServiceImpl implements ArticuloInsumoService {
 	public Iterable<ArticuloInsumo> findByLike(){
 		return repository.search();
 	}
+
+	@Override
+	public Iterable<ArticuloInsumo> findByInsumo() {
+		return repository.articuloForCliente();
+	}
 }

@@ -27,11 +27,13 @@ public class ArticuloMfactDetalleController {
 	@Autowired
 	private ArticuloMfactDetalleServiceImpl service;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/all")
 	public ResponseEntity<?> AllDetalle() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> byId(@PathVariable Long id) {
 		Optional<ArticuloMfactDetalle> o = service.findById(id);
@@ -56,14 +58,14 @@ public class ArticuloMfactDetalleController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(detalleDb));
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody ArticuloMfactDetalle articulo) {
 		ArticuloMfactDetalle articuloDb = service.save(articulo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(articuloDb);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarUno(@PathVariable Long id) {
 		service.deleteById(id);
