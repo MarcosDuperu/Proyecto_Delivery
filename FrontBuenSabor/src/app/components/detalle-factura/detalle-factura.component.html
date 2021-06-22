@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="card">
+    <div class="class-header">
+      <h3 class="class-title text-center">Detalle de Factura</h3>
+    </div>
+    <div class="class-body">
+      <table class="table table-hover">
+        <tbody>
+          <tr *ngFor="let detalle of detalleFactura" class="text-center" routerLink="/models/detalleFactura">
+            <td>Numero de detalle: {{ detalle.id }}</td>
+            <td>Cantidad: {{ detalle.cantidad }}</td>
+            <td>Subtotal: {{ detalle.subtotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

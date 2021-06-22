@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
 import { facturas } from 'src/app/models/facturas';
 import { FacturaService } from 'src/app/services/factura.service';
-import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-facturas',
@@ -27,10 +26,17 @@ export class FacturasComponent implements OnInit {
     this.router.navigate(['nuevaFactura']);
   }
 
-  //Ruta Update Factura
+  //Route Editar Factura
 
-editarFactura() {this.router.navigate(['editarFactura']);}
-    
+  editarFactura() {
+    this.router.navigate(['editarFactura'])
+  }
+
+  //Ruta verDetalleFactura
+
+  verDetalle(){
+    this.router.navigate(['verDetalleFactura']);
+  }
 
     
     delete(factura){
@@ -51,6 +57,10 @@ editarFactura() {this.router.navigate(['editarFactura']);}
       this.facturas = data;
     });
 
+   /* Editar(numero:facturas):void {
+      localStorage.setItem('numero',facturas.numero.toString());
+      this.router.navigate(['editarFactura']);}*/
+        
 
   }
 }

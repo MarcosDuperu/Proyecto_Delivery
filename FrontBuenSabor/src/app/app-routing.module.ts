@@ -7,11 +7,11 @@ import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { HomeComponent } from './components/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { ProductosComponent } from './components/productos/productos.component';
-
 import { CreateComponent } from './components/facturas/create/create.component';
 import { DeleteComponent } from './components/facturas/delete/delete.component';
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 import { UpdateComponent } from './components/facturas/update/update.component';
+import { DetalleFacturaComponent } from './components/detalle-factura/detalle-factura.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'nuevaFactura', component:CreateComponent},
   { path: 'eliminarFactura', component:DeleteComponent},
   { path: 'editarFactura', component:UpdateComponent},
+  { path: 'verDetalleFactura', component:DetalleFacturaComponent},
   { path: 'pedidos', component:PedidosComponent},
   { path: 'productos/detalle/:id/:insumo',component: ProductoDetalleComponent},
   { path: '**', redirectTo: 'home', pathMatch: 'full' }

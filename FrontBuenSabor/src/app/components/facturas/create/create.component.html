@@ -13,37 +13,37 @@
           <label for="">Numero: </label>
           <input
             type="text"
-            class="form-control" [(ngModel)]="factura.numero" name="numero"/>
+            class="form-control" [(ngModel)]="factura.numero" name="numero" placeholder="Número de factura"/>
         </div>
         <div class="form-group">
           <label for="">Numero de Tarjeta:</label>
           <input
             type="text"
-            class="form-control" [(ngModel)]="factura.nroTarjeta" name="nroTarjeta"/>
+            class="form-control" [(ngModel)]="factura.nroTarjeta" name="nroTarjeta" placeholder="Número de tarjeta"/>
         </div>
         <div class="form-group">
           <label for="">Total Venta:</label>
           <input
             type="text"
-            class="form-control" [(ngModel)]="factura.totalVenta" name="totalVenta"/>
+            class="form-control" [(ngModel)]="factura.totalVenta" name="totalVenta" placeholder="Total"/>
         </div>
         <div class="form-group">
           <label for="">Descuento:</label>
           <input
             type="text"
-            class="form-control" [(ngModel)]="factura.montoDescuento" name="montoDescuento"/>
+            class="form-control" [(ngModel)]="factura.montoDescuento" name="montoDescuento" placeholder="Descuento"/>
         </div>
         <div class="form-group">
           <label for="">Total Costo:</label>
           <input
             type="text"
-            class="form-control" [(ngModel)]="factura.totalCosto" name="totalCosto"/>
+            class="form-control" [(ngModel)]="factura.totalCosto" name="totalCosto" placeholder="Costo total"/>
         </div>
         <div class="form-group">
           <label for="">Forma de Pago:</label>
           <input
             type="text"
-            class="form-control" [(ngModel)]="factura.formaPago" name="formaPago"/>
+            class="form-control" [(ngModel)]="factura.formaPago" name="formaPago" placeholder="Forma de pago"/>
         </div>
 
         <button (click)="Guardar(factura)" class="btn btn-info">

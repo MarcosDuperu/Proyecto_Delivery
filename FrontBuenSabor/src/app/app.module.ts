@@ -1,14 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { RegistroComponent } from './auth/registro.component';
-
 import { ToastrModule } from 'ngx-toastr';
 //login social
 import {
@@ -30,6 +27,12 @@ import { ItemProductoComponent } from './components/productos/item-producto/item
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { UpdateComponent } from './components/facturas/update/update.component';
+import { DetalleFacturaComponent } from './components/detalle-factura/detalle-factura.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//Material
+import { MatSliderModule } from '@angular/material/slider';
+import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list'; 
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ import { UpdateComponent } from './components/facturas/update/update.component';
     ProductoDetalleComponent,
     CarritoComponent,
     UpdateComponent,
+    DetalleFacturaComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,10 @@ import { UpdateComponent } from './components/facturas/update/update.component';
     SocialLoginModule,
     ToastrModule.forRoot(),
     FormsModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatListModule,
+    MatGridListModule,
   ],
   providers: [
     interceptorProvider,
