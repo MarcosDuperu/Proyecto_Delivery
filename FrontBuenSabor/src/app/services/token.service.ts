@@ -18,7 +18,10 @@ export class TokenService {
   }
 
   public getToken(): string {
-    return sessionStorage.getItem(TOKEN_KEY);
+    const token_key = sessionStorage.getItem(TOKEN_KEY);
+    console.log(token_key);
+    return token_key;
+    //return sessionStorage.getItem(TOKEN_KEY);
   }
 
   public setUserName(userName: string): void {

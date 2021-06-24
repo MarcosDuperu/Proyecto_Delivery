@@ -19,6 +19,11 @@
             {{userLogged.name}}</a>
         </li>
       </ul>
+      <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
       <img *ngIf="isLogged" src="{{userLogged.photoUrl}}" class="rounded-circle mr-3" style="width: 50px">
       <button *ngIf="isLogged" type="button" class="btn btn-outline-primary" routerLink="/perfil"> Perfil</button>
       <button *ngIf="!isLogged" class="btn btn-outline-success" type="submit" routerLink="/login">

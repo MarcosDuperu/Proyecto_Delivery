@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Cliente } from '../models/Cliente';
-import { Domicilio } from '../models/domicilio';
-import { NuevoUsuario } from '../models/nuevo-usuario';
-import { Usuario } from '../models/Usuario';
-import { AuthService } from '../services/auth.service';
-import { TokenService } from '../services/token.service';
+import { Cliente } from 'src/app/models/Cliente';
+import { Domicilio } from 'src/app/models/domicilio';
+import { NuevoUsuario } from 'src/app/models/nuevo-usuario';
+import { Usuario } from 'src/app/models/Usuario';
+import { AuthService } from 'src/app/services/auth.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css'],
+  selector: 'app-cliente',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.css'],
 })
-export class RegistroComponent implements OnInit {
+export class ClienteComponent implements OnInit {
   nuevoUsuario: NuevoUsuario;
   usuario: string;
   email: string;
@@ -22,7 +22,6 @@ export class RegistroComponent implements OnInit {
   cliente: Cliente = new Cliente();
   domicilio: Domicilio = new Domicilio();
   usuarioP: Usuario;
-
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
@@ -34,39 +33,6 @@ export class RegistroComponent implements OnInit {
     if (this.tokenService.getToken()) {
       this.isLogged = true;
     }
-  }
-
-  onRegister(): void {
-    if (this.tokenService.getToken()) {
-      this.update();
-    } else {
-      //crear cliente
-      this.create();
-    }
-    console.log(this.isLogged);
-  }
-
-  create() {
-    this.nuevoUsuario = new NuevoUsuario(
-      this.usuario,
-      this.email,
-      this.password
-    );
-    this.authService.nuevo(this.nuevoUsuario).subscribe(
-      (data) => {
-        this.toastr.success('Cuenta Creada', 'OK', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-        });
-        this.router.navigate(['/login']);
-      },
-      (err) => {
-        this.toastr.error('No fue posible crear su cuenta', 'Fail', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-        });
-      }
-    );
   }
 
   update() {

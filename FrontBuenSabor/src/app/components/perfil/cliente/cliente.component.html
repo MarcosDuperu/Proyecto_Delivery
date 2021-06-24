@@ -1,0 +1,55 @@
+<ng-template #loggedOut>
+  <div class="container d-flex justify-content-center">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a routerLink="/login" class="nav-link">Iniciar Sesión</a></li>
+          <li class="nav-item"><a routerLink="/registro" class="nav-link active">Crear Cuenta</a></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <form #f="ngForm" (ngSubmit)="update()" novalidate>
+          <div class="form-group">
+            <label for="usuario"> Usuario</label>
+            <input type="text" name="usuario" id="usuario" class="form-control" [(ngModel)]="usuario" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" name="email" id="email" class="form-cotrol" [(ngModel)]="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" class="form-control" [(ngModel)]="password" required>
+          </div>
+          <div class="form-group">
+            <label for="nombre"> Nombre</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" [(ngModel)]="cliente.nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="apellido"> Apellido</label>
+            <input type="text" name="apellido" id="apellido" class="form-control" [(ngModel)]="cliente.apellido"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="telefono"> Telefono</label>
+            <input type="text" name="telefono" id="telefono" class="form-control" [(ngModel)]="cliente.telefono"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="localidad"> Localidad</label>
+            <input type="text" name="localidad" id="localidad" class="form-control" [(ngModel)]="domicilio.localidad"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="numero"> Numero</label>
+            <input type="number" name="numero" id="numero" class="form-control" [(ngModel)]="domicilio.numero" required>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">
+              <i class="fas fa-sign-in-alt"></i> Crear Cuenta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

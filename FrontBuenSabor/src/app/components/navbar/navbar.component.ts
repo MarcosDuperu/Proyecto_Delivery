@@ -10,7 +10,7 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class NavbarComponent implements OnInit {
   userLogged: SocialUser;
-  isLogged = false;
+  isLogged: boolean;
   isLoggedSocial: boolean;
   public openCart: boolean = false;
 
@@ -26,20 +26,24 @@ export class NavbarComponent implements OnInit {
       this.userLogged.name = this.tokenService.getUserName();
     } else {
       this.isLogged = false;
+      this.authServiceSocial.authState.subscribe((data) => {
+        this.userLogged = data;
+        this.isLogged =
+          this.userLogged != null && this.tokenService.getToken() != null;
+      });
     }
-    this.authServiceSocial.authState.subscribe((data) => {
-      this.userLogged = data;
-      this.isLogged = this.userLogged != null;
-      this.isLoggedSocial = this.userLogged != null;
-    });
   }
 
   logOut(): void {
     this.tokenService.logOut();
     this.authServiceSocial.signOut().then((data) => {
+      this.tokenService.logOut();
       this.router.navigate(['/login']);
     });
-    window.location.reload();
+    /* this.authServiceSocial.signOut().then((data) => {
+      this.router.navigate(['/login']);
+    });
+    window.location.reload(); */
   }
 
   public cart() {

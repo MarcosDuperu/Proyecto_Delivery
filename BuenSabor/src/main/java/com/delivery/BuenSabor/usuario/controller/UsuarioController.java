@@ -90,6 +90,23 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
 	}
 	
+	@PostMapping("/crear-cliente")
+	public ResponseEntity<?> nuevoCliente(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
+		if(bindingResult.hasErrors())
+			return ResponseEntity.badRequest().build();
+		if(usuarioService.existsByUsuario(nuevoUsuario.getUsuario()))
+			return ResponseEntity.badRequest().build();
+		Usuario usuario = new Usuario();
+		usuario.setUsuario(nuevoUsuario.getUsuario());
+		usuario.setEmail(nuevoUsuario.getEmail());
+		usuario.setClave(passwordEncoder.encode(nuevoUsuario.getPassword()));
+		usuario.setCliente(nuevoUsuario.getCliente());
+		Set<Rol> roles = new HashSet<>();
+		roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
+		usuario.setRoles(roles);
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
+	}
+	
 	@PostMapping("/cargar")
 	public ResponseEntity<?> cargar(@RequestBody Usuario usuario) {
 		Optional<Usuario> o = usuarioService.getByEmail(usuario.getEmail());
@@ -107,8 +124,10 @@ public class UsuarioController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
+		System.out.println(loginUsuario.getUsuario() + "pass del usuario" + loginUsuario.getPassword());
 		if(bindingResult.hasErrors())
 			return ResponseEntity.badRequest().build();
+		
 		Authentication authentication = 
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getUsuario(), loginUsuario.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -128,13 +147,15 @@ public class UsuarioController {
 		final GoogleIdToken googleIdToken = GoogleIdToken.parse(verifier.getJsonFactory(), tokenDto.getValue());
 		final GoogleIdToken.Payload payload = googleIdToken.getPayload();
 		Usuario usuario = new Usuario();
-		if(usuarioService.existsEmail(payload.getEmail()))
+		if(usuarioService.getByEmail(payload.getEmail()).isPresent()) {
 			usuario = usuarioService.getByEmail(payload.getEmail()).get();
-		else
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		} else {
 			usuario = saveUsuario(payload.getEmail());
+		}
 		TokenDto tokenRes = login (usuario);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(tokenRes);
-		//return new ResponseEntity(tokenRes, HttpStatus.OK);
 	}
 	
 	private TokenDto login(Usuario usuario) {
@@ -148,7 +169,7 @@ public class UsuarioController {
 	}
 	/*private TokenDto loginEmail(Usuario usuario) {
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(usuario.getEmail(), secretPsw)
+				new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getClave())
 				);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtProvider.generateToken(authentication);
@@ -159,15 +180,9 @@ public class UsuarioController {
 
 	private Usuario saveUsuario(String email) {
 		Usuario usuario = new Usuario(email, passwordEncoder.encode(secretPsw));
+		usuario.setUsuario(email);
 		Set<Rol> roles = new HashSet<>();
-		if(usuario.getRoles().contains("cliente"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
-		if(usuario.getRoles().contains("jefe"))
-			roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
-		if(usuario.getRoles().contains("cajero"))
-			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CAJERO).get());
-		if(usuario.getRoles().contains("cocinero"))
-			roles.add(rolService.getByRolNombre(RolNombre.ROLE_COCINERO).get());
 		usuario.setRoles(roles);
 		return usuarioService.save(usuario);
 	}
