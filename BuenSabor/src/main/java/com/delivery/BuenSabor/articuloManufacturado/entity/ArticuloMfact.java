@@ -1,10 +1,8 @@
 package com.delivery.BuenSabor.articuloManufacturado.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.delivery.BuenSabor.articuloMfactDetalle.entity.ArticuloMfactDetalle;
 import com.delivery.BuenSabor.rubroGeneral.entity.RubroGeneral;
@@ -45,8 +42,6 @@ public class ArticuloMfact{
 	private RubroGeneral rubroGeneral;
 	
 	@JsonIgnoreProperties(value= {"handler", "hibernateLazyInitializer"})
-	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	//, mappedBy="articuloMfact"
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="articuloMfact")
 	private List<ArticuloMfactDetalle> articulosMfactDetalle;
 	

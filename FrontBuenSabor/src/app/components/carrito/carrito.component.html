@@ -12,8 +12,8 @@
       <li class="clearfix" *ngFor="let producto of productos">
         <span class="">{{producto.denominacion}}</span>
         <span class="">{{producto.precio}}</span>
-        <span class="">{{cantidad}}</span>
-        <button type="button" class="btn btn-danger ml-4" (click)="remove(producto)"> Remover</button>
+        <span class="">{{producto.cantidad}}</span>
+        <button type="button" class="btn btn-danger ml-4" (clicK)="remove(producto)"> Remover</button>
       </li>
     </ul>
 

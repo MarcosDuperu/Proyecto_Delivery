@@ -13,4 +13,7 @@ public interface ArticuloInsumoRepository extends JpaRepository<ArticuloInsumo, 
 
 	@Query(value = "SELECT * FROM articulo_insumo", nativeQuery = true)
 	public Iterable<ArticuloInsumo> search();
+	
+	@Query(value = "SELECT * FROM articulo_insumo WHERE es_insumo = false AND stock_actual >0")
+	public Iterable<ArticuloInsumo> articuloForCliente();
 }

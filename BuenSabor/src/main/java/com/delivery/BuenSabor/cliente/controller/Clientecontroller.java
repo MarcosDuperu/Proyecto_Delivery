@@ -43,6 +43,7 @@ public class Clientecontroller {
 		return ResponseEntity.ok(o.get());
 	}
 	
+	//Revisar seguridad para que un cliente no pueda podificar datos del administrador
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Cliente cliente, @PathVariable Long id) {
 		Optional<Cliente> o = service.findById(id);
