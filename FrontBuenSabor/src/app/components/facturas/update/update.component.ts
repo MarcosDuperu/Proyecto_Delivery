@@ -13,7 +13,15 @@ export class UpdateComponent implements OnInit {
   factura:facturas = new facturas();
   constructor(private router: Router, private FacturaService: FacturaService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+
+   /*  let id= localStorage.getItem('id')
+    //Arreglar pasar por parametro id
+    this.FacturaService.getFacturasbyNumero(+id); */
+
+
+  }
 
   Guardar(factura) {
     this.FacturaService.editarFactura(factura).subscribe(data => {
@@ -22,4 +30,5 @@ export class UpdateComponent implements OnInit {
     })
     
   }
+ 
 }
