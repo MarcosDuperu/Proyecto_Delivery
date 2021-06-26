@@ -15,6 +15,7 @@ import { TokenService } from '../services/token.service';
 })
 export class RegistroComponent implements OnInit {
   nuevoUsuario: NuevoUsuario;
+  nombreUsuario: string;
   usuario: string;
   email: string;
   password: string;
@@ -49,6 +50,7 @@ export class RegistroComponent implements OnInit {
   create() {
     this.nuevoUsuario = new NuevoUsuario(
       this.usuario,
+      this.nombreUsuario,
       this.email,
       this.password
     );

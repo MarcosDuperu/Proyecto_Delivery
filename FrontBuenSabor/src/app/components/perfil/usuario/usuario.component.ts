@@ -9,11 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
 
 @Component({
-  selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.css'],
+  selector: 'app-usuario',
+  templateUrl: './usuario.component.html',
+  styleUrls: ['./usuario.component.css'],
 })
-export class ClienteComponent implements OnInit {
+export class UsuarioComponent implements OnInit {
   nuevoUsuario: NuevoUsuario;
   usuario: string;
   email: string;
@@ -32,9 +32,14 @@ export class ClienteComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
       this.isLogged = true;
+      this.usuario = this.tokenService.getUserName();
+      console.log(this.tokenService.getUserName());
     }
   }
 
+  updatePass() {
+    console.log('se envia la actualización y el usuario es ' + this.usuario);
+  }
   update() {
     this.cliente.domicilio = this.domicilio;
     this.usuarioP = new Usuario(

@@ -30,7 +30,10 @@ import { ItemProductoComponent } from './components/productos/item-producto/item
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { UpdateComponent } from './components/facturas/update/update.component';
-import { ClienteComponent } from './components/perfil/cliente/cliente.component';
+import { UsuarioComponent } from './components/perfil/usuario/usuario.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,7 @@ import { ClienteComponent } from './components/perfil/cliente/cliente.component'
     ProductoDetalleComponent,
     CarritoComponent,
     UpdateComponent,
-    ClienteComponent,
+    UsuarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,9 @@ import { ClienteComponent } from './components/perfil/cliente/cliente.component'
     SocialLoginModule,
     ToastrModule.forRoot(),
     FormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatMenuModule,
   ],
   providers: [
     interceptorProvider,

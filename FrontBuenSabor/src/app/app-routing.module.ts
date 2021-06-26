@@ -13,14 +13,14 @@ import { DeleteComponent } from './components/facturas/delete/delete.component';
 import { ProductoDetalleComponent } from './components/productos/producto-detalle/producto-detalle.component';
 import { UpdateComponent } from './components/facturas/update/update.component';
 import { ProductoGuard } from './guards/producto.guard';
-import { ClienteComponent } from './components/perfil/cliente/cliente.component';
+import { UsuarioComponent } from './components/perfil/usuario/usuario.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'perfil', component: PerfilComponent },
-  { path: 'perfil/cliente', component: ClienteComponent },
+  { path: 'perfil/usuario', component: UsuarioComponent },
   {
     path: 'lista',
     component: ProductosComponent,

@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFail = false;
 
         this.tokenService.setToken(data.token);
-        this.tokenService.setUserName(data.usuario);
+        this.tokenService.setUserName(data.nombreUsuario);
         this.tokenService.setAuthorities(data.authorities);
         this.roles = data.authorities;
         this.router.navigate(['/']);
@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
         this.isLogged = false;
         this.isLoginFail = true;
         this.errMsj = err.error.message;
-        //console.log(err.error.message);
       }
     );
   }
@@ -79,7 +78,7 @@ export class LoginComponent implements OnInit {
           (res) => {
             this.tokenService.setToken(res.value);
             this.isLogged = true;
-            this.router.navigate(['/']);
+            this.router.navigate(['/perfil/usario']);
           },
           (err) => {
             console.log(err);

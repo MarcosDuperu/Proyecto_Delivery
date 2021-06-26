@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
     } else {
       this.authServiceSocial.authState.subscribe((data) => {
         this.userLogged = data;
+        console.log(data);
         this.isLogged =
           this.userLogged != null && this.tokenService.getToken() != null;
       });

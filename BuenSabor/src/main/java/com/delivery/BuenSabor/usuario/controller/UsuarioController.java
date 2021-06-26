@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,13 +71,14 @@ public class UsuarioController {
 	public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
 		if(bindingResult.hasErrors())
 			return ResponseEntity.badRequest().build();
-		if(usuarioService.existsByUsuario(nuevoUsuario.getUsuario()))
+		if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
 			return ResponseEntity.badRequest().build();
 		Usuario usuario = new Usuario();
-		usuario.setUsuario(nuevoUsuario.getUsuario());
+		usuario.setNombre(nuevoUsuario.getNombre());
+		usuario.setNombreUsuario(nuevoUsuario.getNombreUsuario());
 		usuario.setEmail(nuevoUsuario.getEmail());
-		usuario.setClave(passwordEncoder.encode(nuevoUsuario.getPassword()));
-		usuario.setCliente(nuevoUsuario.getCliente());
+		usuario.setPassword(passwordEncoder.encode(nuevoUsuario.getPassword()));
+		//usuario.setCliente(nuevoUsuario.getCliente());
 		Set<Rol> roles = new HashSet<>();
 		if(nuevoUsuario.getRoles().contains("cliente"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
@@ -94,19 +96,21 @@ public class UsuarioController {
 	public ResponseEntity<?> nuevoCliente(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
 		if(bindingResult.hasErrors())
 			return ResponseEntity.badRequest().build();
-		if(usuarioService.existsByUsuario(nuevoUsuario.getUsuario()))
+		if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
 			return ResponseEntity.badRequest().build();
 		Usuario usuario = new Usuario();
-		usuario.setUsuario(nuevoUsuario.getUsuario());
+		usuario.setNombre(nuevoUsuario.getNombre());
+		usuario.setNombreUsuario(nuevoUsuario.getNombreUsuario());
 		usuario.setEmail(nuevoUsuario.getEmail());
-		usuario.setClave(passwordEncoder.encode(nuevoUsuario.getPassword()));
-		usuario.setCliente(nuevoUsuario.getCliente());
+		usuario.setPassword(passwordEncoder.encode(nuevoUsuario.getPassword()));
+		//usuario.setCliente(nuevoUsuario.getCliente());
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
 		usuario.setRoles(roles);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
 	}
 	
+	/*Puede que no se implemente*/
 	@PostMapping("/cargar")
 	public ResponseEntity<?> cargar(@RequestBody Usuario usuario) {
 		Optional<Usuario> o = usuarioService.getByEmail(usuario.getEmail());
@@ -114,25 +118,27 @@ public class UsuarioController {
 			return ResponseEntity.notFound().build();
 		}
 		Usuario usuarioDb = o.get();
-		usuarioDb.setClave(passwordEncoder.encode(usuario.getClave()));
+		usuarioDb.setPassword(passwordEncoder.encode(usuario.getPassword()));
+		usuarioDb.setNombre(usuario.getNombre());
+		usuarioDb.setNombreUsuario(usuario.getNombreUsuario());
 		usuarioDb.setEmail(usuario.getEmail());
-		usuarioDb.setRoles(usuario.getRoles());
-		usuarioDb.setUsuario(usuario.getUsuario());
-		usuarioDb.setCliente(usuario.getCliente());
+		//usuarioDb.setCliente(usuario.getCliente());
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioDb));
 	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
-		System.out.println(loginUsuario.getUsuario() + "pass del usuario" + loginUsuario.getPassword());
+		
 		if(bindingResult.hasErrors())
 			return ResponseEntity.badRequest().build();
 		
 		Authentication authentication = 
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getUsuario(), loginUsuario.getPassword()));
+		System.out.println(authentication.toString());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtProvider.generateToken(authentication);
 		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		System.out.println(authentication.toString());
 		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
 		return new ResponseEntity<JwtDto>(jwtDto, HttpStatus.OK);
 	}
@@ -158,29 +164,33 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.OK).body(tokenRes);
 	}
 	
+	@PutMapping
+	public ResponseEntity<?> updatePassword(@RequestBody LoginUsuario usuario) {
+		Optional o = usuarioService.findByUsuario(usuario.getUsuario());
+		if(o.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		usuarioService.updatePassword(usuario.getPassword(), usuario.getUsuario());
+		return ResponseEntity.ok().build();
+		/*LoginUsuario usuarioDb = new LoginUsuario();
+		usuarioDb.setUsuario(usuario.getUsuario());
+		usuarioDb.setPassword(usuario.getPassword());
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDb);*/
+	}
+	
 	private TokenDto login(Usuario usuario) {
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(usuario.getUsuario(), secretPsw));
+				new UsernamePasswordAuthenticationToken(usuario.getNombreUsuario(), secretPsw));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtProvider.generateToken(authentication);
 		TokenDto tokenDto = new TokenDto();
 		tokenDto.setValue(jwt);
 		return tokenDto;
 	}
-	/*private TokenDto loginEmail(Usuario usuario) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getClave())
-				);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtProvider.generateToken(authentication);
-		TokenDto tokenDto = new TokenDto();
-		tokenDto.setValue(jwt);
-		return tokenDto;
-	}*/
 
 	private Usuario saveUsuario(String email) {
-		Usuario usuario = new Usuario(email, passwordEncoder.encode(secretPsw));
-		usuario.setUsuario(email);
+		Usuario usuario = new Usuario(email, email, passwordEncoder.encode(secretPsw));
+		usuario.setNombreUsuario(email);
 		Set<Rol> roles = new HashSet<>();
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
 		usuario.setRoles(roles);
