@@ -13,16 +13,17 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto" *ngIf="isLogged">
-        <li><a id="cart" (click)="cart()" style="color: aliceblue;"><i class="fa fa-shopping-cart"></i> Cart</a></li>
         <li class="nav-item disabled">
           <a class="nav-link">
             {{userName}}</a>
         </li>
+        <li><a id="cart" (click)="cart()" style="color: aliceblue;"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+
       </ul>
 
-      <img *ngIf="isLogged" src="{{userLogged.photoUrl}}" class="rounded-circle mr-3" style="width: 50px">
+      <!-- <img *ngIf="isLogged" src="{{userLogged.photoUrl}}" class="rounded-circle mr-3" style="width: 50px"> -->
       <!-- <button *ngIf="isLogged" type="button" class="btn btn-outline-primary" routerLink="/perfil"> Perfil</button> -->
-      <div *ngIf="isLogged" class="btn btn-outline-primary">
+      <div *ngIf="isLogged" class="btn btn-outline-primary btn-sm">
         <button mat-button [matMenuTriggerFor]="menu">Menu</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/perfil">Perfil</button>

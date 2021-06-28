@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
           (res) => {
             this.tokenService.setToken(res.value);
             this.isLogged = true;
-            this.router.navigate(['/perfil/usario']);
+            this.router.navigate(['/']);
           },
           (err) => {
             console.log(err);

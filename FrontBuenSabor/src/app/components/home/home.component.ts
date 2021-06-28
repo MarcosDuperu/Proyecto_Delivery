@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     if (this.tokenService.getToken()) {
       this.isLogged = true;
       this.nombreUsuario = this.tokenService.getUserName();
-      this.userLogged.name = this.tokenService.getUserName();
+      //this.userLogged.name = this.tokenService.getUserName();
     } else {
       this.authServiceSocial.authState.subscribe((data) => {
         this.userLogged = data;
