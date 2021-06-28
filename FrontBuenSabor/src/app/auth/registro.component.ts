@@ -15,6 +15,7 @@ import { TokenService } from '../services/token.service';
 })
 export class RegistroComponent implements OnInit {
   nuevoUsuario: NuevoUsuario;
+  nombreUsuario: string;
   usuario: string;
   email: string;
   password: string;
@@ -37,8 +38,19 @@ export class RegistroComponent implements OnInit {
   }
 
   onRegister(): void {
+    if (this.tokenService.getToken()) {
+      this.update();
+    } else {
+      //crear cliente
+      this.create();
+    }
+    console.log(this.isLogged);
+  }
+
+  create() {
     this.nuevoUsuario = new NuevoUsuario(
       this.usuario,
+      this.nombreUsuario,
       this.email,
       this.password
     );
@@ -57,8 +69,6 @@ export class RegistroComponent implements OnInit {
         });
       }
     );
-    //crear cliente
-    this.update();
   }
 
   update() {
