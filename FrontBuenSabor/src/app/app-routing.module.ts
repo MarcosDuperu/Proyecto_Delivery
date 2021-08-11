@@ -14,6 +14,7 @@ import { ProductoDetalleComponent } from './components/productos/producto-detall
 import { UpdateComponent } from './components/facturas/update/update.component';
 import { ProductoGuard } from './guards/producto.guard';
 import { UsuarioComponent } from './components/perfil/usuario/usuario.component';
+import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/detalle-pedido.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'eliminarFactura', component: DeleteComponent },
   { path: 'editarFactura', component: UpdateComponent },
   { path: 'pedidos', component: PedidosComponent },
+  { path: 'pedidos/nuevo', component: DetallePedidoComponent },
   {
     path: 'productos/detalle/:id/:insumo',
     component: ProductoDetalleComponent,

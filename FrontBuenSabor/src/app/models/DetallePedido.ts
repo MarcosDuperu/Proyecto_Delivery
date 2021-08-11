@@ -1,12 +1,12 @@
 import { ArticuloInsumo } from './ArticuloInsumo';
 import { ArticuloMfact } from './ArticuloMfact';
-import { Factura } from './factura';
+import { Pedido } from './Pedido';
 
-export class DetalleFactura {
+export class detallePedido {
   id: number;
   cantidad: number;
   subtotal: number;
-  articuloMfact: ArticuloMfact;
   articuloInsumo: ArticuloInsumo;
-  factura: Factura;
+  articulomfact: ArticuloMfact;
+  pedido: Pedido;
 }

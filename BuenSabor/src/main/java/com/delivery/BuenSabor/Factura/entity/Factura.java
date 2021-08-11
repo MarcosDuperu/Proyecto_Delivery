@@ -59,7 +59,7 @@ public class Factura {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_usuario")
-	private Usuario usuario;
+	private Usuario usuario; // Debería ser Cliente mejor
 
 	public Factura() {
 		this.detallesFacturas = new ArrayList<DetalleFactura>();

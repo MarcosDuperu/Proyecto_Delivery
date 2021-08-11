@@ -1,15 +1,15 @@
 <div class="container">
-  <div class="shopping-cart">
-    <div class="shopping-cart-header">
-      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{cantidadTotal}}</span>
-      <div class="shopping-cart-total h6">
+  <div class="">
+    <div class="">
+      <span class="badge">{{cantidadTotal}}</span>
+      <div class=" h6">
         <span class="">Total:</span>
         <span class="text-success">${{precioTotal}}</span>
       </div>
     </div>
 
-    <ul class="shopping-cart-items">
-      <li class="clearfix row" *ngFor="let producto of productos">
+    <ul class="">
+      <li class=" row" *ngFor="let producto of productos">
         <span class="col-3">{{producto.denominacion}}</span>
         <span class="text-success col-3">{{producto.precioVenta}}</span>
         <span class=" col-3">{{producto.cantidad}}</span>
@@ -17,6 +17,7 @@
       </li>
     </ul>
 
-    <a routerLink="/pedidos/nuevo" class="btn btn-success">Generar Pedido</a>
+    <label for="mp">Este botón es el de mercado pago</label>
+    <a id="mp" (click)="crearFactura()" class="btn btn-success">Confirmar Pedido</a>
   </div>
 </div>
