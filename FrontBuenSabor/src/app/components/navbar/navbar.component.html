@@ -14,26 +14,32 @@
       </ul>
       <ul class="navbar-nav ml-auto" *ngIf="isLogged">
         <li class="nav-item disabled">
-          <a class="nav-link">
+          <a class="nav-link disabled text-white">
             {{userName}}</a>
         </li>
-        <li><a id="cart" (click)="cart()" style="color: aliceblue;"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+        <li class="nav-item btn me-1"><a id="cart" (click)="cart()" style="color: aliceblue;"><i
+              class="fa fa-shopping-cart"></i>
+            Carrito</a></li>
 
+        <div *ngIf="isLogged" class="btn btn-outline-primary btn-sm me-1">
+          <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/perfil">Perfil</button>
+            <button mat-menu-item routerLink="/perfil/usuario">Actualizar</button>
+          </mat-menu>
+        </div>
+
+        <button *ngIf="isLogged" class="btn btn-outline-danger" type="submit" (click)="logOut()">
+          <i class="fas fa-sign-out-alt fa-lg"> </i> Cerrar Sesión</button>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <button *ngIf="!isLogged" class="btn btn-outline-success" type="submit" routerLink="/login">
+          <i class="fas fa-sign-in-alt fa-lg"> </i> Iniciar Sesión</button>
       </ul>
 
       <!-- <img *ngIf="isLogged" src="{{userLogged.photoUrl}}" class="rounded-circle mr-3" style="width: 50px"> -->
       <!-- <button *ngIf="isLogged" type="button" class="btn btn-outline-primary" routerLink="/perfil"> Perfil</button> -->
-      <div *ngIf="isLogged" class="btn btn-outline-primary btn-sm">
-        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/perfil">Perfil</button>
-          <button mat-menu-item routerLink="/perfil/usuario">Actualizar</button>
-        </mat-menu>
-      </div>
-      <button *ngIf="!isLogged" class="btn btn-outline-success" type="submit" routerLink="/login">
-        <i class="fas fa-sign-in-alt fa-lg"> </i> Iniciar Sesión</button>
-      <button *ngIf="isLogged" class="btn btn-outline-danger" type="submit" (click)="logOut()">
-        <i class="fas fa-sign-out-alt fa-lg"> </i> Cerrar Sesión</button>
+
     </div>
   </div>
 </nav>

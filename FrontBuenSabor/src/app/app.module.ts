@@ -34,6 +34,7 @@ import { UsuarioComponent } from './components/perfil/usuario/usuario.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/detalle-pedido.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MatMenuModule } from '@angular/material/menu';
     CarritoComponent,
     UpdateComponent,
     UsuarioComponent,
+    DetallePedidoComponent,
   ],
   imports: [
     BrowserModule,

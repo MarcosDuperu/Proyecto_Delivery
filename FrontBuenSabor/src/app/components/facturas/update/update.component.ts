@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacturaService } from 'src/app/services/factura.service';
-import { facturas } from '../../../models/facturas';
+import { Factura } from '../../../models/factura';
 
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.css']
+  styleUrls: ['./update.component.css'],
 })
 export class UpdateComponent implements OnInit {
-
-  factura:facturas = new facturas();
+  factura: Factura = new Factura();
   constructor(private router: Router, private FacturaService: FacturaService) {}
 
   ngOnInit(): void {}
 
   Guardar(factura) {
-    this.FacturaService.editarFactura(factura).subscribe(data => {
+    this.FacturaService.editarFactura(factura).subscribe((data) => {
       alert('Factura editada con exito!');
-      this.router.navigate(['facturas'])
-    })
-    
+      this.router.navigate(['facturas']);
+    });
   }
 }

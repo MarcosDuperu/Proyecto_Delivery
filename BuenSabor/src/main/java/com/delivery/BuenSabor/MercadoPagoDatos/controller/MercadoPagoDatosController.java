@@ -64,7 +64,7 @@ public class MercadoPagoDatosController {
 		datosDb.setFechaCreacion(datos.getFechaCreacion());
 		datosDb.setFormaPago(datos.getFormaPago());
 		datosDb.setMetodoPago(datos.getMetodoPago());
-		datosDb.setPedido(datos.getPedido());
+		//datosDb.setPedido(datos.getPedido());
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(datosDb));
 	}
 	
@@ -82,7 +82,7 @@ public class MercadoPagoDatosController {
 		return ResponseEntity.noContent().build();
 	}
 	//El token tendría que pasarlo en los argumentos
-	@PostMapping("/efectuarpago/{factura}")
+	@PostMapping("/efectuarpago")
 	public ResponseEntity<?> realizarPago(@RequestBody Factura factura) throws MPException {
 		MercadoPago.SDK.setAccessToken("TEST-3502556041132733-050214-ef47a9e5aa971c2965bc747986c19440-187659340");
 		Preference preference = new Preference();

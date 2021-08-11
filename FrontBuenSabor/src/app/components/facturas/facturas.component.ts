@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { facturas } from 'src/app/models/facturas';
+import { Factura } from 'src/app/models/factura';
 import { FacturaService } from 'src/app/services/factura.service';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -15,12 +15,9 @@ export class FacturasComponent implements OnInit {
   isLogged = false;
   isLoggedSocial: boolean;
 
-  facturas: facturas[];
-  f:facturas= new facturas();
-  constructor(
-    private FacturaService: FacturaService,
-    private router: Router,
-  ) {}
+  facturas: Factura[];
+  f: Factura = new Factura();
+  constructor(private FacturaService: FacturaService, private router: Router) {}
 
   //Ruta Create Factura
   nuevaFactura() {
@@ -29,28 +26,22 @@ export class FacturasComponent implements OnInit {
 
   //Ruta Update Factura
 
-editarFactura() {this.router.navigate(['editarFactura']);}
-    
+  editarFactura() {
+    this.router.navigate(['editarFactura']);
+  }
 
-    
-    delete(factura){
-      if(confirm("Esta seguro que desea eliminar esta factura?")){
-      this.FacturaService.deleteFacturas(factura)
-      .subscribe(data =>{
-        this.facturas = this.facturas!.filter(f=>f!==factura);
-        this.router.navigate(['facturas'])
-        
-      
-    })}
+  delete(factura) {
+    if (confirm('Esta seguro que desea eliminar esta factura?')) {
+      this.FacturaService.deleteFacturas(factura).subscribe((data) => {
+        this.facturas = this.facturas!.filter((f) => f !== factura);
+        this.router.navigate(['facturas']);
+      });
     }
-          
-      
+  }
 
   ngOnInit(): void {
     this.FacturaService.getFacturas().subscribe((data) => {
       this.facturas = data;
     });
-
-
   }
 }
