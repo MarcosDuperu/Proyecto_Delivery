@@ -15,6 +15,7 @@ import { UpdateComponent } from './components/facturas/update/update.component';
 import { ProductoGuard } from './guards/producto.guard';
 import { UsuarioComponent } from './components/perfil/usuario/usuario.component';
 import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/detalle-pedido.component';
+import { NuevoProductoComponent } from './components/productos/nuevo-producto/nuevo-producto.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
   {
     path: 'lista',
     component: ProductosComponent,
-    canActivate: [ProductoGuard],
+    canActivate: [ProductoGuard], data: { expectedRol: ['admin','cliente']},
   },
   { path: 'facturas', component: FacturasComponent },
   { path: 'nuevaFactura', component: CreateComponent },
@@ -37,6 +38,8 @@ const routes: Routes = [
     path: 'productos/detalle/:id/:insumo',
     component: ProductoDetalleComponent,
   },
+  {path: 'producto/nuevo', component: NuevoProductoComponent,
+  canActivate: [ProductoGuard], data: { expectedRol: ['admin']},},
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 

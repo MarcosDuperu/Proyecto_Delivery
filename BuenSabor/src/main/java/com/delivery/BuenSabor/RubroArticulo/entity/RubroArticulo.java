@@ -24,6 +24,10 @@ public class RubroArticulo {
     @Column(name = "rubro_articulo")*/
 	private List<RubroArticulo> rubroArticulo;
 
+	public RubroArticulo() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}

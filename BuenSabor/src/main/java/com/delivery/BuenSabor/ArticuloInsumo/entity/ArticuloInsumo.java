@@ -1,5 +1,6 @@
 package com.delivery.BuenSabor.ArticuloInsumo.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,9 +40,13 @@ public class ArticuloInsumo {
 	@Column(name = "es_insumo")
 	private boolean esInsumo;
 	
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_rubro_articulo")
 	private RubroArticulo rubroArticulo;
+
+	public ArticuloInsumo() {
+		super();
+	}
 
 	public Long getId() {
 		return id;

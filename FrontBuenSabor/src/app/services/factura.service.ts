@@ -10,26 +10,24 @@ export class FacturaService {
   facturas: Factura[];
   constructor(private http: HttpClient) {}
 
-  listar = 'http://localhost:9000/api/v1/factura/all';
-  listarId = 'http://localhost:9000/api/v1/factura';
-  delete = 'http://localhost:9000/api/v1/factura/id';
+  url = 'http://localhost:9000/api/v1/factura'
 
   getFacturas() {
-    return this.http.get<Factura[]>(this.listar);
+    return this.http.get<Factura[]>(this.url);
   }
   getFacturasbyNumero(numero: Factura) {
-    return this.http.get<Factura[]>(this.listarId + '/' + numero);
+    return this.http.get<Factura[]>(`${this.url}/${numero}`);
   }
-  createFactura(facturas: Factura[]) {
-    return this.http.post<Factura[]>(this.listarId, facturas);
+  createFactura(factura: Factura[]) {
+    return this.http.post<Factura[]>(this.url, factura);
   }
-  deleteFacturas(facturas: Factura): Observable<Object> {
-    return this.http.delete(this.listarId + '/' + facturas.numero);
+  deleteFacturas(factura: Factura): Observable<Object> {
+    return this.http.delete(`${this.url}/${factura.numero}`);
   }
-  editarFactura(facturas: Factura) {
+  editarFactura(factura: Factura) {
     return this.http.put<Factura[]>(
-      this.listarId + '/' + facturas.numero,
-      facturas
+      `${this.url}/${factura.numero}`,
+      factura
     );
   }
 }

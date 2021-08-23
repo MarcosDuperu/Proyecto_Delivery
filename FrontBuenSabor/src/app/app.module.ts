@@ -35,6 +35,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/detalle-pedido.component';
+import { NuevoProductoComponent } from './components/productos/nuevo-producto/nuevo-producto.component';
+import { InsumoComponent } from './components/productos/insumo/insumo.component';
+import { MfactComponent } from './components/productos/mfact/mfact.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/deta
     UpdateComponent,
     UsuarioComponent,
     DetallePedidoComponent,
+    NuevoProductoComponent,
+    InsumoComponent,
+    MfactComponent,
   ],
   imports: [
     BrowserModule,

@@ -80,9 +80,10 @@ public class ArticuloInsumoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(articuloDb));
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody ArticuloInsumo articuloInsumo) {
+		System.out.println("Se ejecutó el metod");
 		ArticuloInsumo articuloDb = service.save(articuloInsumo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(articuloDb);
 	}

@@ -1,0 +1,43 @@
+<div class="card-body">
+    <form #f="ngForm" (ngSubmit)="onSave()" novalidate>
+        <div class="form-group">
+            <label for="denominacion"> Denominación</label>
+            <input type="text" name="denominacion" id="denominacion" class="form-control" [(ngModel)]="insumo.denominacion"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="precioCompra"> Precio Compra</label>
+            <input type="text" name="precioCompra" id="precioCompra" class="form-control" [(ngModel)]="insumo.precioCompra"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="precioVenta"> Precio Venta</label>
+            <input type="text" name="precioVenta" id="precioVenta" class="form-control" [(ngModel)]="insumo.precioVenta"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="stockActual"> Stock Actual</label>
+            <input type="text" name="stockActual" id="stockActual" class="form-control" [(ngModel)]="insumo.stockActual"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="stockMinimo"> Stock Minimo</label>
+            <input type="text" name="stockMinimo" id="stockMinimo" class="form-control" [(ngModel)]="insumo.stockMinimo"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="UnidadMedida"> Unidad de medida</label>
+            <input type="text" name="UnidadMedida" id="UnidadMedida" class="form-control" [(ngModel)]="insumo.unidadMedida"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="rubroArticulo"> Rubro Articulo</label>
+            <input type="text" name="rubroArticulo" id="rubroArticulo" class="form-control" [(ngModel)]="rubroArticulo.denominacion"
+              required>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">
+              <i class="fas fa-sign-in-alt"></i> Agregar Producto</button>
+          </div>
+    </form>
+</div>

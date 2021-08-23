@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import {
   CanActivate,
@@ -13,13 +14,22 @@ import { TokenService } from '../services/token.service';
   providedIn: 'root',
 })
 export class ProductoGuard implements CanActivate {
+  realRol: string;
   constructor(private tokenService: TokenService, private router: Router) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (!this.tokenService.getToken()) {
+    const expectedRol = route.data.expectedRol;
+    const roles = this.tokenService.getAuthorities();
+    this.realRol = 'cliente';
+    roles.forEach((rol) => {
+      if(rol === 'ROLE_ADMIN') {
+        this.realRol = 'admin';
+      }
+    });
+    if (!this.tokenService.getToken() || expectedRol.indexOf(this.realRol) === -1) {
       this.router.navigate(['/']);
       return false;
     }

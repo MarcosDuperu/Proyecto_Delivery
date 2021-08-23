@@ -30,4 +30,6 @@ export class DetallePedidoComponent implements OnInit {
   public remove(producto: Producto) {
     this._cartService.removeEmenetCart(producto);
   }
+
+  crearFactura() {}
 }

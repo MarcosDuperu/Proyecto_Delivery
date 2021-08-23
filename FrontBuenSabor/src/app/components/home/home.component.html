@@ -3,12 +3,16 @@
     <h2 class="display-4" *ngIf="!isLogged; else elseBlock">Bienvenido</h2>
     <!-- <h2 class="display-4" *ngIf="isLogged">Bienvenido {{userLogged.name}}</h2> -->
     <ng-template #elseBlock>
-      <h2 class="display-4">Bienvenido {{nombreUsuario}}</h2>
+      <div class="d-flex justify-content-between">
+      <!-- <div class="col-sm-12 col-md-6 col-lg-6"> -->
+      <h2 class="display-4 ">Bienvenido {{nombreUsuario}}</h2>
+    <!-- </div> -->
+      <div >
+        <a class="btn btn-primary" href="/producto/nuevo">+ Producto</a>
+        <a class="btn btn-warning ms-3" href="">Listar</a>
+      </div>
+    </div>
     </ng-template>
-    <p class="lead"></p>
-    <hr class="my-4">
-    <p></p>
-    <a href="" class="btn btn-primary-btn-lg"></a>
   </div>
 </div>
 <app-productos></app-productos>

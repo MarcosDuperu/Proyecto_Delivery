@@ -1,0 +1,25 @@
+<div class="container d-flex justify-content-center">
+    <div class="card text-center mt-3" style="width: 22rem;">
+        <div class="card-header">
+            <div class="row g-3">
+                <label for="create" class="form-label fs-4">Tipo de producto: </label>
+                <div class="form-check col-sm-6">
+                    <input class="form-check-input" type="radio" name="tipo" id="insumo" value="insumo" checked
+                        [(ngModel)]="tipoProducto" />
+                    <label class="form-check-label d-flex" for="insumo">Es insumo</label>
+                </div>
+                <div class="form-check col-sm-6">
+                    <input class="form-check-input" type="radio" name="tipo" id="manufactoruado" value="manufactoruado"
+                         [(ngModel)]="tipoProducto" />
+                    <label class="form-check-label d-flex" for="manufactoruado">Es manufactoruado</label>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="tipoProducto == 'insumo'; else mfact">
+            <app-insumo></app-insumo>
+        </div>
+        <ng-template #mfact>
+            
+        </ng-template>
+    </div>
+</div>
