@@ -16,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -78,7 +77,6 @@ public class UsuarioController {
 		usuario.setNombreUsuario(nuevoUsuario.getNombreUsuario());
 		usuario.setEmail(nuevoUsuario.getEmail());
 		usuario.setPassword(passwordEncoder.encode(nuevoUsuario.getPassword()));
-		//usuario.setCliente(nuevoUsuario.getCliente());
 		Set<Rol> roles = new HashSet<>();
 		if(nuevoUsuario.getRoles().contains("cliente"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
@@ -103,14 +101,12 @@ public class UsuarioController {
 		usuario.setNombreUsuario(nuevoUsuario.getNombreUsuario());
 		usuario.setEmail(nuevoUsuario.getEmail());
 		usuario.setPassword(passwordEncoder.encode(nuevoUsuario.getPassword()));
-		//usuario.setCliente(nuevoUsuario.getCliente());
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolService.getByRolNombre(RolNombre.ROLE_CLIENTE).get());
 		usuario.setRoles(roles);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
 	}
 	
-	/*Puede que no se implemente*/
 	@PostMapping("/cargar")
 	public ResponseEntity<?> cargar(@RequestBody Usuario usuario) {
 		Optional<Usuario> o = usuarioService.getByEmail(usuario.getEmail());
@@ -122,7 +118,6 @@ public class UsuarioController {
 		usuarioDb.setNombre(usuario.getNombre());
 		usuarioDb.setNombreUsuario(usuario.getNombreUsuario());
 		usuarioDb.setEmail(usuario.getEmail());
-		//usuarioDb.setCliente(usuario.getCliente());
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioDb));
 	}
 	
@@ -137,9 +132,7 @@ public class UsuarioController {
 		System.out.println(authentication.toString());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtProvider.generateToken(authentication);
-		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
-		System.out.println(authentication.toString());
-		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+		JwtDto jwtDto = new JwtDto(jwt);
 		return new ResponseEntity<JwtDto>(jwtDto, HttpStatus.OK);
 	}
 	
@@ -166,16 +159,12 @@ public class UsuarioController {
 	
 	@PutMapping
 	public ResponseEntity<?> updatePassword(@RequestBody LoginUsuario usuario) {
-		Optional o = usuarioService.findByUsuario(usuario.getUsuario());
+		Optional<Usuario> o = usuarioService.findByUsuario(usuario.getUsuario());
 		if(o.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		usuarioService.updatePassword(usuario.getPassword(), usuario.getUsuario());
 		return ResponseEntity.ok().build();
-		/*LoginUsuario usuarioDb = new LoginUsuario();
-		usuarioDb.setUsuario(usuario.getUsuario());
-		usuarioDb.setPassword(usuario.getPassword());
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDb);*/
 	}
 	
 	private TokenDto login(Usuario usuario) {

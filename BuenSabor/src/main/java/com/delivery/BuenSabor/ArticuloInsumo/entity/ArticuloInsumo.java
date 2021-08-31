@@ -7,10 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.RubroArticulo.entity.RubroArticulo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "articulo_insumo")
@@ -40,12 +42,20 @@ public class ArticuloInsumo {
 	@Column(name = "es_insumo")
 	private boolean esInsumo;
 	
+	@Lob
+	@JsonIgnore
+	private byte[] imagen;
+	
 	@ManyToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_rubro_articulo")
 	private RubroArticulo rubroArticulo;
 
 	public ArticuloInsumo() {
 		super();
+	}
+	
+	public Integer getImgHashCode() {
+		return (this.imagen != null) ? this.imagen.hashCode(): null;
 	}
 
 	public Long getId() {
@@ -120,6 +130,14 @@ public class ArticuloInsumo {
 		this.rubroArticulo = rubroArticulo;
 	}
 
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(this==obj) {
@@ -132,19 +150,4 @@ public class ArticuloInsumo {
 		return this.id !=null && this.id.equals(a.getId());
 	}
 
-	@Override
-	public String toString() {
-		String obj = "Id: " + this.id +
-				"/ Denominacion: " + this.denominacion +
-				"/ PrecioCompra: " + this.precioCompra +
-				"/ PrecioVenta: " + this.precioVenta +
-				"/ StockActual: " + this.stockActual +
-				"/ StockMinimo: " + this.stockMinimo +
-				"/ UnidadDeMedida: " + this.unidadMedida +
-				"/ EsInsumo: " + this.esInsumo +
-				"/ RubroArticulo: " + this.rubroArticulo.getDenominacion();
-		return obj;
-	}
-	
-	
 }

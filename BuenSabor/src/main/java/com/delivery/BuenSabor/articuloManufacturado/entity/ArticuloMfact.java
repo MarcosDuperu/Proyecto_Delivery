@@ -10,12 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.delivery.BuenSabor.articuloMfactDetalle.entity.ArticuloMfactDetalle;
 import com.delivery.BuenSabor.rubroGeneral.entity.RubroGeneral;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -35,7 +37,9 @@ public class ArticuloMfact{
 	@Column(name = "precio_venta")
 	private double precioVenta;
 	
-	private String imagen;
+	@Lob
+	@JsonIgnore
+	private byte[] imagen;
 	
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "fk_rubro_general")
@@ -47,6 +51,10 @@ public class ArticuloMfact{
 	
 	public ArticuloMfact() {
 		this.articulosMfactDetalle = new ArrayList<ArticuloMfactDetalle>();
+	}
+	
+	public Integer getImgHashCode() {
+		return (this.imagen != null) ? this.imagen.hashCode(): null;
 	}
 
 	public Long getId() {
@@ -81,12 +89,16 @@ public class ArticuloMfact{
 		this.precioVenta = precioVenta;
 	}
 
-	public String getImagen() {
+	public byte[] getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
+	}
+
+	public void setArticulosMfactDetalle(List<ArticuloMfactDetalle> articulosMfactDetalle) {
+		this.articulosMfactDetalle = articulosMfactDetalle;
 	}
 
 	public RubroGeneral getRubroGeneral() {

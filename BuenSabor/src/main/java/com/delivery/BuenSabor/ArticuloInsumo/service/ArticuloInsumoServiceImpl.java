@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.delivery.BuenSabor.ArticuloInsumo.entity.ArticuloInsumo;
 import com.delivery.BuenSabor.ArticuloInsumo.repository.ArticuloInsumoRepository;
@@ -15,11 +16,13 @@ public class ArticuloInsumoServiceImpl implements ArticuloInsumoService {
 	protected ArticuloInsumoRepository repository;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<ArticuloInsumo> finAll() {
 		return repository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<ArticuloInsumo> findById(Long id) {
 		return repository.findById(id);
 	}
@@ -35,11 +38,13 @@ public class ArticuloInsumoServiceImpl implements ArticuloInsumoService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<ArticuloInsumo> findByLike(){
 		return repository.search();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<ArticuloInsumo> findByInsumo() {
 		return repository.articuloForCliente();
 	}

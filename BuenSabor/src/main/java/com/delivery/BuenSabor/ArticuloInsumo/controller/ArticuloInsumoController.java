@@ -3,7 +3,10 @@ package com.delivery.BuenSabor.ArticuloInsumo.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,6 +52,17 @@ public class ArticuloInsumoController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	@GetMapping("/img/{id}")
+	public ResponseEntity<?> viewImg(@PathVariable Long id) {
+		Optional<ArticuloInsumo> o = service.findById(id);
+		if (o.isEmpty() || o.get().getImagen() == null) {
+			return ResponseEntity.notFound().build();
+		}
+		Resource imagen = new ByteArrayResource(o.get().getImagen());
+		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen);
+			
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COCINERO') or hasRole('ROLE_CAJERO')")

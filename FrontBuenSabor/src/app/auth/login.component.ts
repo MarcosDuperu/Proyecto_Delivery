@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   loginUsuario: LoginUsuario;
   nombreUsuario: string;
   password: string;
-  roles: string[] = [];
+  isAdmin: boolean
   errMsj: string;
   socialUser: SocialUser;
   userLogged: SocialUser;
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     if (this.tokenService.getToken()) {
       this.isLogged = true;
       this.isLoginFail = false;
-      this.roles = this.tokenService.getAuthorities();
+      this.isAdmin = this.tokenService.isAdmin();
     } else {
       this.authServiceSocial.authState.subscribe((data) => {
         this.userLogged = data;
@@ -55,9 +55,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFail = false;
 
         this.tokenService.setToken(data.token);
-        this.tokenService.setUserName(data.nombreUsuario);
-        this.tokenService.setAuthorities(data.authorities);
-        this.roles = data.authorities;
+        //this.roles = data.authorities;
         window.location.assign('/');
         //this.router.navigate(['/']).then(() => window.location.reload());
       },

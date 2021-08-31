@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.delivery.BuenSabor.articuloManufacturado.entity.ArticuloMfact;
 import com.delivery.BuenSabor.articuloManufacturado.repository.ArticuloMfactRepository;
@@ -15,11 +16,13 @@ public class ArticuloMfactServiceImpl implements ArticuloMfactService {
 	protected ArticuloMfactRepository articuloMfactRepository; 
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<ArticuloMfact> findAll() {
 		return articuloMfactRepository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<ArticuloMfact> findById(Long id) {
 		return articuloMfactRepository.findById(id);
 	}
@@ -35,6 +38,7 @@ public class ArticuloMfactServiceImpl implements ArticuloMfactService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<ArticuloMfact> findByLike() {
 		return articuloMfactRepository.search();
 	}
